@@ -253,7 +253,7 @@ msgstr "Erfahre mehr ..."
 
 #: html/home.php
 msgid "Support"
-msgstr "Untersttzung"
+msgstr "Unterstützung"
 
 #: html/home.php
 msgid "Package Requests"
