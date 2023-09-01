@@ -11,7 +11,10 @@ from aurweb import aur_logging, db, l10n, models, time
 from aurweb.auth import creds, requires_auth
 from aurweb.exceptions import handle_form_exceptions
 from aurweb.models import User
-from aurweb.models.account_type import TRUSTED_USER_AND_DEV_ID, TRUSTED_USER_ID
+from aurweb.models.account_type import (
+    PACKAGE_MAINTAINER_AND_DEV_ID,
+    PACKAGE_MAINTAINER_ID,
+)
 from aurweb.templates import make_context, make_variable_context, render_template
 
 router = APIRouter()
@@ -33,25 +36,25 @@ ADDVOTE_SPECIFICS = {
 }
 
 
-def populate_trusted_user_counts(context: dict[str, Any]) -> None:
+def populate_package_maintainer_counts(context: dict[str, Any]) -> None:
     tu_query = db.query(User).filter(
         or_(
-            User.AccountTypeID == TRUSTED_USER_ID,
-            User.AccountTypeID == TRUSTED_USER_AND_DEV_ID,
+            User.AccountTypeID == PACKAGE_MAINTAINER_ID,
+            User.AccountTypeID == PACKAGE_MAINTAINER_AND_DEV_ID,
         )
     )
-    context["trusted_user_count"] = tu_query.count()
+    context["package_maintainer_count"] = tu_query.count()
 
     # In case any records have a None InactivityTS.
     active_tu_query = tu_query.filter(
         or_(User.InactivityTS.is_(None), User.InactivityTS == 0)
     )
-    context["active_trusted_user_count"] = active_tu_query.count()
+    context["active_package_maintainer_count"] = active_tu_query.count()
 
 
 @router.get("/tu")
 @requires_auth
-async def trusted_user(
+async def package_maintainer(
     request: Request,
     coff: int = 0,  # current offset
     cby: str = "desc",  # current by
@@ -63,7 +66,7 @@ async def trusted_user(
     if not request.user.has_credential(creds.TU_LIST_VOTES):
         return RedirectResponse("/", status_code=HTTPStatus.SEE_OTHER)
 
-    context = make_context(request, "Trusted User")
+    context = make_context(request, "Package Maintainer")
 
     current_by, past_by = cby, pby
     current_off, past_off = coff, poff
@@ -129,7 +132,7 @@ async def trusted_user(
     context["current_by_next"] = "asc" if current_by == "desc" else "desc"
     context["past_by_next"] = "asc" if past_by == "desc" else "desc"
 
-    populate_trusted_user_counts(context)
+    populate_package_maintainer_counts(context)
 
     context["q"] = {
         "coff": current_off,
@@ -178,11 +181,11 @@ def render_proposal(
 
 @router.get("/tu/{proposal}")
 @requires_auth
-async def trusted_user_proposal(request: Request, proposal: int):
+async def package_maintainer_proposal(request: Request, proposal: int):
     if not request.user.has_credential(creds.TU_LIST_VOTES):
         return RedirectResponse("/tu", status_code=HTTPStatus.SEE_OTHER)
 
-    context = await make_variable_context(request, "Trusted User")
+    context = await make_variable_context(request, "Package Maintainer")
     proposal = int(proposal)
 
     voteinfo = (
@@ -221,13 +224,13 @@ async def trusted_user_proposal(request: Request, proposal: int):
 @router.post("/tu/{proposal}")
 @handle_form_exceptions
 @requires_auth
-async def trusted_user_proposal_post(
+async def package_maintainer_proposal_post(
     request: Request, proposal: int, decision: str = Form(...)
 ):
     if not request.user.has_credential(creds.TU_LIST_VOTES):
         return RedirectResponse("/tu", status_code=HTTPStatus.SEE_OTHER)
 
-    context = await make_variable_context(request, "Trusted User")
+    context = await make_variable_context(request, "Package Maintainer")
     proposal = int(proposal)  # Make sure it's an int.
 
     voteinfo = (
@@ -285,7 +288,7 @@ async def trusted_user_proposal_post(
 
 @router.get("/addvote")
 @requires_auth
-async def trusted_user_addvote(
+async def package_maintainer_addvote(
     request: Request, user: str = str(), type: str = "add_tu", agenda: str = str()
 ):
     if not request.user.has_credential(creds.TU_ADD_VOTE):
@@ -308,7 +311,7 @@ async def trusted_user_addvote(
 @router.post("/addvote")
 @handle_form_exceptions
 @requires_auth
-async def trusted_user_addvote_post(
+async def package_maintainer_addvote_post(
     request: Request,
     user: str = Form(default=str()),
     type: str = Form(default=str()),
@@ -364,7 +367,7 @@ async def trusted_user_addvote_post(
     timestamp = time.utcnow()
 
     # Active TU types we filter for.
-    types = {TRUSTED_USER_ID, TRUSTED_USER_AND_DEV_ID}
+    types = {PACKAGE_MAINTAINER_ID, PACKAGE_MAINTAINER_AND_DEV_ID}
 
     # Create a new TUVoteInfo (proposal)!
     with db.begin():

@@ -8,7 +8,7 @@ import pytest
 from fastapi.testclient import TestClient
 
 from aurweb import config, db, filters, time
-from aurweb.models.account_type import DEVELOPER_ID, TRUSTED_USER_ID, AccountType
+from aurweb.models.account_type import DEVELOPER_ID, PACKAGE_MAINTAINER_ID, AccountType
 from aurweb.models.tu_vote import TUVote
 from aurweb.models.tu_voteinfo import TUVoteInfo
 from aurweb.models.user import User
@@ -90,7 +90,9 @@ def client():
 
 @pytest.fixture
 def tu_user():
-    tu_type = db.query(AccountType, AccountType.AccountType == "Trusted User").first()
+    tu_type = db.query(
+        AccountType, AccountType.AccountType == "Package Maintainer"
+    ).first()
     with db.begin():
         tu_user = db.create(
             User,
@@ -112,7 +114,7 @@ def tu_user2():
             Email="test_tu2@example.org",
             RealName="Test TU 2",
             Passwd="testPassword",
-            AccountTypeID=TRUSTED_USER_ID,
+            AccountTypeID=PACKAGE_MAINTAINER_ID,
         )
     yield tu_user2
 
