@@ -307,7 +307,7 @@ msgstr "चर्चा"
 #: html/home.php
 #, php-format
 msgid ""
-"General discussion regarding the Arch User Repository (AUR) and Trusted User"
+"General discussion regarding the Arch User Repository (AUR) and Package Maintainer"
 " structure takes place on %saur-general%s. For discussion relating to the "
 "development of the AUR web interface, use the %saur-dev%s mailing list."
 msgstr "आर्च उपयोक्ता पैकेज-संग्रह (AUR) व विश्वसनीय उपयोक्ता संरचना संबंधी सामान्य चर्चा %saur-general%s पर होती है। AUR वेब अंतरफलक के विकास संबंधी चर्चा हेतु %saur-dev%s ईमेल-सूची उपयोग करें।"
@@ -523,7 +523,7 @@ msgid "Delete"
 msgstr "हटाएँ"
 
 #: html/pkgdel.php
-msgid "Only Trusted Users and Developers can delete packages."
+msgid "Only Package Maintainers and Developers can delete packages."
 msgstr "केवल विश्वसनीय उपयोक्ता व व सॉफ्टवेयर विकासकर्ता ही पैकेज हटा सकते हैं।"
 
 #: html/pkgdisown.php template/pkgbase_actions.php
@@ -564,7 +564,7 @@ msgid "Disown"
 msgstr "स्वामित्व निरस्त करें"
 
 #: html/pkgdisown.php
-msgid "Only Trusted Users and Developers can disown packages."
+msgid "Only Package Maintainers and Developers can disown packages."
 msgstr "केवल विश्वसनीय उपयोक्ता व व सॉफ्टवेयर विकासकर्ता ही पैकेज स्वामित्व निरस्त कर सकते हैं।"
 
 #: html/pkgflagcomment.php
@@ -654,7 +654,7 @@ msgid "Merge"
 msgstr "विलय करें"
 
 #: html/pkgmerge.php
-msgid "Only Trusted Users and Developers can merge packages."
+msgid "Only Package Maintainers and Developers can merge packages."
 msgstr "केवल विश्वसनीय उपयोक्ता व व सॉफ्टवेयर विकासकर्ता ही पैकेज विलय कर सकते हैं।"
 
 #: html/pkgreq.php template/pkgbase_actions.php template/pkgreq_form.php
@@ -712,7 +712,7 @@ msgid "I accept the terms and conditions above."
 msgstr "मैं ऊपर दिए गए नियम व शर्तों को स्वीकारता हूँ।"
 
 #: html/tu.php template/account_details.php template/header.php
-msgid "Trusted User"
+msgid "Package Maintainer"
 msgstr "विश्वसनीय उपयोक्ता"
 
 #: html/tu.php
@@ -724,7 +724,7 @@ msgid "Voting is closed for this proposal."
 msgstr "इस प्रस्ताव हेतु वोट प्रक्रिया बंद है।"
 
 #: html/tu.php
-msgid "Only Trusted Users are allowed to vote."
+msgid "Only Package Maintainers are allowed to vote."
 msgstr "केवल विश्वसनीय उपयोक्ता ही मतदान कर सकते हैं।"
 
 #: html/tu.php
@@ -1220,7 +1220,7 @@ msgstr "सॉफ्टवेयर विकासकर्ता"
 
 #: template/account_details.php template/account_edit_form.php
 #: template/search_accounts_form.php
-msgid "Trusted User & Developer"
+msgid "Package Maintainer & Developer"
 msgstr "विश्वसनीय उपयोक्ता व सॉफ्टवेयर विकासकर्ता"
 
 #: template/account_details.php template/account_edit_form.php
@@ -1322,10 +1322,6 @@ msgstr "लॉगिन हेतु प्रयुक्त नाम ही �
 #: template/account_edit_form.php template/search_accounts_form.php
 msgid "Normal user"
 msgstr "सामान्य उपयोक्ता"
-
-#: template/account_edit_form.php template/search_accounts_form.php
-msgid "Trusted user"
-msgstr "विश्वसनीय उपयोक्ता"
 
 #: template/account_edit_form.php template/search_accounts_form.php
 msgid "Account Suspended"
@@ -1822,14 +1818,14 @@ msgstr "इसमें विलय करें"
 
 #: template/pkgreq_form.php
 msgid ""
-"By submitting a deletion request, you ask a Trusted User to delete the "
+"By submitting a deletion request, you ask a Package Maintainer to delete the "
 "package base. This type of request should be used for duplicates, software "
 "abandoned by upstream, as well as illegal and irreparably broken packages."
 msgstr "हटाने हेतु अनुरोध से अभिप्राय है विश्वसनीय उपयोक्ता को पैकेज बेस हटाने हेतु निवेदन। यह प्रतिरूपित प्रोग्राम, स्रोत द्वारा त्यागे गए सॉफ्टवेयर के साथ ही अवैध व समाधान विहीन समस्यात्मक पैकेज हेतु उचित होता है।"
 
 #: template/pkgreq_form.php
 msgid ""
-"By submitting a merge request, you ask a Trusted User to delete the package "
+"By submitting a merge request, you ask a Package Maintainer to delete the package "
 "base and transfer its votes and comments to another package base. Merging a "
 "package does not affect the corresponding Git repositories. Make sure you "
 "update the Git history of the target package yourself."
@@ -1837,7 +1833,7 @@ msgstr "विलय अनुरोध से अभिप्राय है �
 
 #: template/pkgreq_form.php
 msgid ""
-"By submitting an orphan request, you ask a Trusted User to disown the "
+"By submitting an orphan request, you ask a Package Maintainer to disown the "
 "package base. Please only do this if the package needs maintainer action, "
 "the maintainer is MIA and you already tried to contact the maintainer "
 "previously."
@@ -2094,7 +2090,7 @@ msgid "Registered Users"
 msgstr "पंजीकृत उपयोक्ता"
 
 #: template/stats/general_stats_table.php
-msgid "Trusted Users"
+msgid "Package Maintainers"
 msgstr "विश्वसनीय उपयोक्ता"
 
 #: template/stats/updates_table.php

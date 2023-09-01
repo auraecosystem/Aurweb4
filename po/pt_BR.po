@@ -313,10 +313,10 @@ msgstr "Discussão"
 #: html/home.php
 #, php-format
 msgid ""
-"General discussion regarding the Arch User Repository (AUR) and Trusted User"
+"General discussion regarding the Arch User Repository (AUR) and Package Maintainer"
 " structure takes place on %saur-general%s. For discussion relating to the "
 "development of the AUR web interface, use the %saur-dev%s mailing list."
-msgstr "Discussões gerais no que se refere à estrutura do Arch User Repository (AUR) e de Trusted Users acontecem no %saur-general%s. Para discussão relacionada ao desenvolvimento da interface web do AUR, use a lista de discussão do %saur-dev%s"
+msgstr "Discussões gerais no que se refere à estrutura do Arch User Repository (AUR) e de Package Maintainers acontecem no %saur-general%s. Para discussão relacionada ao desenvolvimento da interface web do AUR, use a lista de discussão do %saur-dev%s"
 
 #: html/home.php
 msgid "Bug Reporting"
@@ -529,8 +529,8 @@ msgid "Delete"
 msgstr "Excluir"
 
 #: html/pkgdel.php
-msgid "Only Trusted Users and Developers can delete packages."
-msgstr "Somente Trusted Users e Desenvolvedores podem excluir pacotes."
+msgid "Only Package Maintainers and Developers can delete packages."
+msgstr "Somente Package Maintainers e Desenvolvedores podem excluir pacotes."
 
 #: html/pkgdisown.php template/pkgbase_actions.php
 msgid "Disown Package"
@@ -570,8 +570,8 @@ msgid "Disown"
 msgstr "Abandonar"
 
 #: html/pkgdisown.php
-msgid "Only Trusted Users and Developers can disown packages."
-msgstr "Apenas Trusted Users e Desenvolvedores podem abandonar pacotes."
+msgid "Only Package Maintainers and Developers can disown packages."
+msgstr "Apenas Package Maintainers e Desenvolvedores podem abandonar pacotes."
 
 #: html/pkgflagcomment.php
 msgid "Flag Comment"
@@ -660,8 +660,8 @@ msgid "Merge"
 msgstr "Mesclar"
 
 #: html/pkgmerge.php
-msgid "Only Trusted Users and Developers can merge packages."
-msgstr "Somente Trusted Users e Desenvolvedores podem mesclar pacotes."
+msgid "Only Package Maintainers and Developers can merge packages."
+msgstr "Somente Package Maintainers e Desenvolvedores podem mesclar pacotes."
 
 #: html/pkgreq.php template/pkgbase_actions.php template/pkgreq_form.php
 msgid "Submit Request"
@@ -718,8 +718,8 @@ msgid "I accept the terms and conditions above."
 msgstr "Eu aceito os termos e condições acima."
 
 #: html/tu.php template/account_details.php template/header.php
-msgid "Trusted User"
-msgstr "Trusted User"
+msgid "Package Maintainer"
+msgstr "Package Maintainer"
 
 #: html/tu.php
 msgid "Could not retrieve proposal details."
@@ -730,8 +730,8 @@ msgid "Voting is closed for this proposal."
 msgstr "A votação está encerrada para esta proposta."
 
 #: html/tu.php
-msgid "Only Trusted Users are allowed to vote."
-msgstr "Apenas Trusted Users têm permissão para votar."
+msgid "Only Package Maintainers are allowed to vote."
+msgstr "Apenas Package Maintainers têm permissão para votar."
 
 #: html/tu.php
 msgid "You cannot vote in an proposal about you."
@@ -1226,8 +1226,8 @@ msgstr "Desenvolvedor"
 
 #: template/account_details.php template/account_edit_form.php
 #: template/search_accounts_form.php
-msgid "Trusted User & Developer"
-msgstr "Trusted User & Desenvolvedor"
+msgid "Package Maintainer & Developer"
+msgstr "Package Maintainer & Desenvolvedor"
 
 #: template/account_details.php template/account_edit_form.php
 #: template/search_accounts_form.php
@@ -1328,10 +1328,6 @@ msgstr "Seu nome de usuário é o nome que você vai usar para se autenticar. É
 #: template/account_edit_form.php template/search_accounts_form.php
 msgid "Normal user"
 msgstr "Usuário normal"
-
-#: template/account_edit_form.php template/search_accounts_form.php
-msgid "Trusted user"
-msgstr "Trusted user"
 
 #: template/account_edit_form.php template/search_accounts_form.php
 msgid "Account Suspended"
@@ -1829,26 +1825,26 @@ msgstr "Mesclar em"
 
 #: template/pkgreq_form.php
 msgid ""
-"By submitting a deletion request, you ask a Trusted User to delete the "
+"By submitting a deletion request, you ask a Package Maintainer to delete the "
 "package base. This type of request should be used for duplicates, software "
 "abandoned by upstream, as well as illegal and irreparably broken packages."
-msgstr "Ao enviar uma requisição de exclusão, você solicita que um Trusted User exclua o pacote base. Esse tipo de requisição deveria ser usada em caso de duplicidade, softwares abandonados pelo upstream, assim como pacotes ilegais ou irreparavelmente quebrados."
+msgstr "Ao enviar uma requisição de exclusão, você solicita que um Package Maintainer exclua o pacote base. Esse tipo de requisição deveria ser usada em caso de duplicidade, softwares abandonados pelo upstream, assim como pacotes ilegais ou irreparavelmente quebrados."
 
 #: template/pkgreq_form.php
 msgid ""
-"By submitting a merge request, you ask a Trusted User to delete the package "
+"By submitting a merge request, you ask a Package Maintainer to delete the package "
 "base and transfer its votes and comments to another package base. Merging a "
 "package does not affect the corresponding Git repositories. Make sure you "
 "update the Git history of the target package yourself."
-msgstr "Ao enviar uma requisição de mesclagem, você solicita que um Trusted User exclua o pacote base e transfira seus votos e comentários para um outro pacote base. Mesclar um pacote não afeta os repositórios Git correspondentes. Certifique-se de você mesmo atualizar o histórico Git do pacote alvo."
+msgstr "Ao enviar uma requisição de mesclagem, você solicita que um Package Maintainer exclua o pacote base e transfira seus votos e comentários para um outro pacote base. Mesclar um pacote não afeta os repositórios Git correspondentes. Certifique-se de você mesmo atualizar o histórico Git do pacote alvo."
 
 #: template/pkgreq_form.php
 msgid ""
-"By submitting an orphan request, you ask a Trusted User to disown the "
+"By submitting an orphan request, you ask a Package Maintainer to disown the "
 "package base. Please only do this if the package needs maintainer action, "
 "the maintainer is MIA and you already tried to contact the maintainer "
 "previously."
-msgstr "Ao enviar uma requisição de tornar órfão, você pede que um Trusted User abandona o pacote base. Por favor, apenas faça isto se o pacote precise de ação do mantenedor, estando este ausente por muito tempo, e você já tentou – e não conseguiu – contatá-lo anteriormente."
+msgstr "Ao enviar uma requisição de tornar órfão, você pede que um Package Maintainer abandona o pacote base. Por favor, apenas faça isto se o pacote precise de ação do mantenedor, estando este ausente por muito tempo, e você já tentou – e não conseguiu – contatá-lo anteriormente."
 
 #: template/pkgreq_results.php
 msgid "No requests matched your search criteria."
@@ -2105,8 +2101,8 @@ msgid "Registered Users"
 msgstr "Usuários registrados"
 
 #: template/stats/general_stats_table.php
-msgid "Trusted Users"
-msgstr "Trusted Users"
+msgid "Package Maintainers"
+msgstr "Package Maintainers"
 
 #: template/stats/updates_table.php
 msgid "Recent Updates"

@@ -210,7 +210,7 @@ async def package_maintainer_proposal(request: Request, proposal: int):
         .first()
     )
     if not request.user.has_credential(creds.TU_VOTE):
-        context["error"] = "Only Trusted Users are allowed to vote."
+        context["error"] = "Only Package Maintainers are allowed to vote."
     if voteinfo.User == request.user.Username:
         context["error"] = "You cannot vote in an proposal about you."
     elif vote is not None:
@@ -257,7 +257,7 @@ async def package_maintainer_proposal_post(
 
     status_code = HTTPStatus.OK
     if not request.user.has_credential(creds.TU_VOTE):
-        context["error"] = "Only Trusted Users are allowed to vote."
+        context["error"] = "Only Package Maintainers are allowed to vote."
         status_code = HTTPStatus.UNAUTHORIZED
     elif voteinfo.User == request.user.Username:
         context["error"] = "You cannot vote in an proposal about you."

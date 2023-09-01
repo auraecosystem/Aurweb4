@@ -310,7 +310,7 @@ msgstr "討論"
 #: html/home.php
 #, php-format
 msgid ""
-"General discussion regarding the Arch User Repository (AUR) and Trusted User"
+"General discussion regarding the Arch User Repository (AUR) and Package Maintainer"
 " structure takes place on %saur-general%s. For discussion relating to the "
 "development of the AUR web interface, use the %saur-dev%s mailing list."
 msgstr "與 Arch 使用者套件庫(AUR)及受信使用者結構相關的一般性討論請見 %saur-general%s 。討論關於 AUR 網頁介面的開發，請使用 %saur-dev%s 郵件列表。"
@@ -526,7 +526,7 @@ msgid "Delete"
 msgstr "刪除"
 
 #: html/pkgdel.php
-msgid "Only Trusted Users and Developers can delete packages."
+msgid "Only Package Maintainers and Developers can delete packages."
 msgstr "只有受信使用者和開發者可以刪除套件。"
 
 #: html/pkgdisown.php template/pkgbase_actions.php
@@ -567,7 +567,7 @@ msgid "Disown"
 msgstr "棄置"
 
 #: html/pkgdisown.php
-msgid "Only Trusted Users and Developers can disown packages."
+msgid "Only Package Maintainers and Developers can disown packages."
 msgstr "只有受信使用者和開發者可以棄置套件。"
 
 #: html/pkgflagcomment.php
@@ -657,7 +657,7 @@ msgid "Merge"
 msgstr "合併"
 
 #: html/pkgmerge.php
-msgid "Only Trusted Users and Developers can merge packages."
+msgid "Only Package Maintainers and Developers can merge packages."
 msgstr "只有受信使用者和開發者可以合併套件。"
 
 #: html/pkgreq.php template/pkgbase_actions.php template/pkgreq_form.php
@@ -715,7 +715,7 @@ msgid "I accept the terms and conditions above."
 msgstr "我接受上述條款與條件。"
 
 #: html/tu.php template/account_details.php template/header.php
-msgid "Trusted User"
+msgid "Package Maintainer"
 msgstr "受信使用者"
 
 #: html/tu.php
@@ -727,7 +727,7 @@ msgid "Voting is closed for this proposal."
 msgstr "這個建議的投票已被關閉。"
 
 #: html/tu.php
-msgid "Only Trusted Users are allowed to vote."
+msgid "Only Package Maintainers are allowed to vote."
 msgstr "只有受信使用者可以投票。"
 
 #: html/tu.php
@@ -1223,7 +1223,7 @@ msgstr "開發者"
 
 #: template/account_details.php template/account_edit_form.php
 #: template/search_accounts_form.php
-msgid "Trusted User & Developer"
+msgid "Package Maintainer & Developer"
 msgstr "受信使用者 & 開發者"
 
 #: template/account_details.php template/account_edit_form.php
@@ -1325,10 +1325,6 @@ msgstr "您的使用者名稱是您要用於登入的名稱。它是公開的，
 #: template/account_edit_form.php template/search_accounts_form.php
 msgid "Normal user"
 msgstr "一般使用者"
-
-#: template/account_edit_form.php template/search_accounts_form.php
-msgid "Trusted user"
-msgstr "受信使用者"
 
 #: template/account_edit_form.php template/search_accounts_form.php
 msgid "Account Suspended"
@@ -1824,14 +1820,14 @@ msgstr "合併到"
 
 #: template/pkgreq_form.php
 msgid ""
-"By submitting a deletion request, you ask a Trusted User to delete the "
+"By submitting a deletion request, you ask a Package Maintainer to delete the "
 "package base. This type of request should be used for duplicates, software "
 "abandoned by upstream, as well as illegal and irreparably broken packages."
 msgstr "透過遞交刪除請求，您會請求受信使用者刪除套件基礎。這個類型的請求應該用於重複、被上游放棄的軟體，以及違法與無法修復的損壞套件。"
 
 #: template/pkgreq_form.php
 msgid ""
-"By submitting a merge request, you ask a Trusted User to delete the package "
+"By submitting a merge request, you ask a Package Maintainer to delete the package "
 "base and transfer its votes and comments to another package base. Merging a "
 "package does not affect the corresponding Git repositories. Make sure you "
 "update the Git history of the target package yourself."
@@ -1839,7 +1835,7 @@ msgstr "透過遞交合併請求，您會請求受信使用者刪除套件基礎
 
 #: template/pkgreq_form.php
 msgid ""
-"By submitting an orphan request, you ask a Trusted User to disown the "
+"By submitting an orphan request, you ask a Package Maintainer to disown the "
 "package base. Please only do this if the package needs maintainer action, "
 "the maintainer is MIA and you already tried to contact the maintainer "
 "previously."
@@ -2092,7 +2088,7 @@ msgid "Registered Users"
 msgstr "已註冊的使用者"
 
 #: template/stats/general_stats_table.php
-msgid "Trusted Users"
+msgid "Package Maintainers"
 msgstr "受信使用者"
 
 #: template/stats/updates_table.php

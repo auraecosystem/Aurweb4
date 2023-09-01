@@ -312,7 +312,7 @@ msgstr "Обговорення"
 #: html/home.php
 #, php-format
 msgid ""
-"General discussion regarding the Arch User Repository (AUR) and Trusted User"
+"General discussion regarding the Arch User Repository (AUR) and Package Maintainer"
 " structure takes place on %saur-general%s. For discussion relating to the "
 "development of the AUR web interface, use the %saur-dev%s mailing list."
 msgstr "Загальне обговорення сховища користувацьких пакунків (AUR) та структури довірених користувачів відбувається в %saur-general%s. Для дискусій про розробку AUR використовуйте список розсилання %saur-dev%s."
@@ -528,7 +528,7 @@ msgid "Delete"
 msgstr "Вилучити"
 
 #: html/pkgdel.php
-msgid "Only Trusted Users and Developers can delete packages."
+msgid "Only Package Maintainers and Developers can delete packages."
 msgstr "Тільки Довірені Користувачі та Розробники можуть вилучати пакунки."
 
 #: html/pkgdisown.php template/pkgbase_actions.php
@@ -569,7 +569,7 @@ msgid "Disown"
 msgstr "Відректися"
 
 #: html/pkgdisown.php
-msgid "Only Trusted Users and Developers can disown packages."
+msgid "Only Package Maintainers and Developers can disown packages."
 msgstr "Тільки Довірені Користувачі та Розробники можуть забирати права власності на пакунок."
 
 #: html/pkgflagcomment.php
@@ -659,7 +659,7 @@ msgid "Merge"
 msgstr "Об’єднати"
 
 #: html/pkgmerge.php
-msgid "Only Trusted Users and Developers can merge packages."
+msgid "Only Package Maintainers and Developers can merge packages."
 msgstr "Тільки Довірені Користувачі та Розробники можуть об’єднувати пакунки."
 
 #: html/pkgreq.php template/pkgbase_actions.php template/pkgreq_form.php
@@ -717,7 +717,7 @@ msgid "I accept the terms and conditions above."
 msgstr "Я приймаю подані вище терміни і умови.  "
 
 #: html/tu.php template/account_details.php template/header.php
-msgid "Trusted User"
+msgid "Package Maintainer"
 msgstr "Довірений користувач"
 
 #: html/tu.php
@@ -729,7 +729,7 @@ msgid "Voting is closed for this proposal."
 msgstr "Голосування на цю пропозицію закрито."
 
 #: html/tu.php
-msgid "Only Trusted Users are allowed to vote."
+msgid "Only Package Maintainers are allowed to vote."
 msgstr "Тільки Довірені Користувачі мають право голосу."
 
 #: html/tu.php
@@ -1225,7 +1225,7 @@ msgstr "Розробник"
 
 #: template/account_details.php template/account_edit_form.php
 #: template/search_accounts_form.php
-msgid "Trusted User & Developer"
+msgid "Package Maintainer & Developer"
 msgstr "Довірений користувач & Розробник"
 
 #: template/account_details.php template/account_edit_form.php
@@ -1327,10 +1327,6 @@ msgstr "Ваша назва користувача є назвою, що буд�
 #: template/account_edit_form.php template/search_accounts_form.php
 msgid "Normal user"
 msgstr "Звичайний користувач"
-
-#: template/account_edit_form.php template/search_accounts_form.php
-msgid "Trusted user"
-msgstr "Довіренний користувач"
 
 #: template/account_edit_form.php template/search_accounts_form.php
 msgid "Account Suspended"
@@ -1829,14 +1825,14 @@ msgstr "Об'єднати в"
 
 #: template/pkgreq_form.php
 msgid ""
-"By submitting a deletion request, you ask a Trusted User to delete the "
+"By submitting a deletion request, you ask a Package Maintainer to delete the "
 "package base. This type of request should be used for duplicates, software "
 "abandoned by upstream, as well as illegal and irreparably broken packages."
 msgstr "Надсилаючи запит на вилучення, Ви просите Довіреного Користувача вилучити пакунок з бази пакунків. Цей тип запиту повинен використовуватися для дублікатів, неоновлюваних програм, а також нелегальних і невиправно пошкоджених пакунків."
 
 #: template/pkgreq_form.php
 msgid ""
-"By submitting a merge request, you ask a Trusted User to delete the package "
+"By submitting a merge request, you ask a Package Maintainer to delete the package "
 "base and transfer its votes and comments to another package base. Merging a "
 "package does not affect the corresponding Git repositories. Make sure you "
 "update the Git history of the target package yourself."
@@ -1844,7 +1840,7 @@ msgstr "Надсилаючи запит на об'єднання, Ви прос�
 
 #: template/pkgreq_form.php
 msgid ""
-"By submitting an orphan request, you ask a Trusted User to disown the "
+"By submitting an orphan request, you ask a Package Maintainer to disown the "
 "package base. Please only do this if the package needs maintainer action, "
 "the maintainer is MIA and you already tried to contact the maintainer "
 "previously."
@@ -2109,7 +2105,7 @@ msgid "Registered Users"
 msgstr "Зареєстровані користувачі"
 
 #: template/stats/general_stats_table.php
-msgid "Trusted Users"
+msgid "Package Maintainers"
 msgstr "Довірені користувачі"
 
 #: template/stats/updates_table.php
