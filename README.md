@@ -1,5 +1,5 @@
 aurweb
-======
+=======
 
 aurweb is a hosting platform for the Arch User Repository (AUR), a collection
 of packaging scripts that are created and submitted by the Arch Linux
