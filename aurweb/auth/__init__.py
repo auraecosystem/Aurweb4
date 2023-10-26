@@ -50,7 +50,7 @@ class AnonymousUser:
     LangPreference = aurweb.config.get("options", "default_lang")
     Timezone = aurweb.config.get("options", "default_timezone")
 
-    Suspended = 0
+    Suspended = False
     InactivityTS = 0
 
     # A stub ssh_pub_key relationship.
