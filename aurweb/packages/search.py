@@ -1,6 +1,6 @@
 from typing import Set
 
-from sqlalchemy import and_, case, or_, orm
+from sqlalchemy import and_, case, func, or_, orm
 
 from aurweb import db, models
 from aurweb.models import Group, Package, PackageBase, User
@@ -106,7 +106,7 @@ class PackageSearch:
         self.query = self.query.filter(
             or_(
                 Package.Name.like(f"%{keywords}%"),
-                Package.Description.like(f"%{keywords}%"),
+                func.lower(Package.Description).like(f"%{keywords}%"),
             )
         )
         return self
@@ -136,9 +136,9 @@ class PackageSearch:
         self._join_user()
         self._join_keywords()
         keywords = set(k.lower() for k in keywords)
-        self.query = self.query.filter(PackageKeyword.Keyword.in_(keywords)).group_by(
-            models.Package.Name
-        )
+        self.query = self.query.filter(
+            func.lower(PackageKeyword.Keyword).in_(keywords)
+        ).distinct()
 
         return self
 
