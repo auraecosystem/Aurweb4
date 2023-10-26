@@ -14,7 +14,7 @@ variables:
   CURRENT_DIR: "$(pwd)"
   LOG_CONFIG: logging.test.conf
   DEV_FQDN: aurweb-$CI_COMMIT_REF_SLUG.sandbox.archlinux.page
-  INFRASTRUCTURE_REPO: https://gitlab.archlinux.org/archlinux/infrastructure.git
+  INFRASTRUCTURE_REPO: https://gitlab.archlinux.org/moson/infrastructure.git
 
 lint:
   stage: .pre
@@ -113,6 +113,7 @@ provision_review:
       # Clone infra repo
     - git clone $INFRASTRUCTURE_REPO
     - cd infrastructure
+    - git checkout aurweb-postgres
       # Remove vault files
     - rm $(git grep -l 'ANSIBLE_VAULT;1.1;AES256$')
       # Remove vault config
@@ -131,7 +132,7 @@ provision_review:
         -e "aurdev_fqdn=$DEV_FQDN" \
         -e "aurweb_repository=$CI_REPOSITORY_URL" \
         -e "aurweb_version=$CI_COMMIT_SHA" \
-        -e "{\"vault_mariadb_users\":{\"root\":\"aur\"}}" \
+        -e "{\"vault_postgres_users\":{\"postgres\":\"aur\"}}" \
         -e "vault_aurweb_db_password=aur" \
         -e "vault_aurweb_gitlab_instance=https://does.not.exist" \
         -e "vault_aurweb_error_project=set-me" \
