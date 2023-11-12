@@ -83,7 +83,7 @@ def test_login_logout(client: TestClient, user: User):
 
 def test_login_suspended(client: TestClient, user: User):
     with db.begin():
-        user.Suspended = 1
+        user.Suspended = True
 
     data = {"user": user.Username, "passwd": "testPassword", "next": "/"}
     with client as request:
@@ -370,5 +370,4 @@ def test_generate_unique_sid_exhausted(
     assert re.search(expr, caplog.text)
     assert "IntegrityError" in caplog.text
 
-    expr = r"Duplicate entry .+ for key .+SessionID.+"
-    assert re.search(expr, response.text)
+    assert "duplicate key value" in response.text
