@@ -97,6 +97,7 @@ pyalpm = "^0.10.6"
 fastapi = "^0.104.1"
 srcinfo = "^0.1.2"
 tomlkit = "^0.12.0"
+psycopg2 = {extras = ["c"], version = "^2.9.7"}
 
 [tool.poetry.dev-dependencies]
 coverage = "^7.3.2"
