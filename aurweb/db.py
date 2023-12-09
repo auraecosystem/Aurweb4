@@ -1,5 +1,39 @@
+from contextvars import ContextVar
+from threading import get_ident
+from typing import Optional
+
+from sqlalchemy.orm import Session
+
 # Supported database drivers.
-DRIVERS = {"mysql": "mysql+mysqldb"}
+DRIVERS = {"postgres": "postgresql+psycopg2"}
+
+
+class Committer:
+    def __init__(self, session):
+        self.session = session
+
+    def __enter__(self):
+        pass
+
+    def __exit__(self, *args):
+        self.session.commit()
+
+
+db_session_context: ContextVar[Optional[int]] = ContextVar(
+    "session_id", default=get_ident()
+)
+
+
+def get_db_session_context():
+    id = db_session_context.get()
+    return id
+
+
+def set_db_session_context(session_id: int):
+    if session_id is None:
+        get_session().remove()
+
+    db_session_context.set(session_id)
 
 
 def make_random_value(table: str, column: str, length: int):
@@ -61,38 +95,39 @@ def name() -> str:
     return "db" + sha1
 
 
-# Module-private global memo used to store SQLAlchemy sessions.
-_sessions = dict()
+# Module-private global memo used to store SQLAlchemy sessions registries.
+_session_registries = dict()
 
 
-def get_session(engine=None):
+def get_session(engine=None) -> Session:
     """Return aurweb.db's global session."""
     dbname = name()
 
-    global _sessions
-    if dbname not in _sessions:
+    global _session_registries
+    if dbname not in _session_registries:
         from sqlalchemy.orm import scoped_session, sessionmaker
 
         if not engine:  # pragma: no cover
             engine = get_engine()
 
         Session = scoped_session(
-            sessionmaker(autocommit=True, autoflush=False, bind=engine)
+            sessionmaker(autoflush=False, bind=engine),
+            scopefunc=get_db_session_context,
         )
-        _sessions[dbname] = Session()
+        _session_registries[dbname] = Session
 
-    return _sessions.get(dbname)
+    return _session_registries.get(dbname)
 
 
 def pop_session(dbname: str) -> None:
     """
-    Pop a Session out of the private _sessions memo.
+    Pop a Session registry out of the private _session_registries memo.
 
     :param dbname: Database name
     :raises KeyError: When `dbname` does not exist in the memo
     """
-    global _sessions
-    _sessions.pop(dbname)
+    global _session_registries
+    _session_registries.pop(dbname)
 
 
 def refresh(model):
@@ -158,7 +193,7 @@ def add(model):
 
 def begin():
     """Begin an SQLAlchemy SessionTransaction."""
-    return get_session().begin()
+    return Committer(get_session())
 
 
 def retry_deadlock(func):
@@ -217,26 +252,25 @@ def get_sqlalchemy_url():
     parts = sqlalchemy.__version__.split(".")
     major = int(parts[0])
     minor = int(parts[1])
-    if major == 1 and minor >= 4:  # pragma: no cover
+    if (major == 1 and minor >= 4) or (major == 2):  # pragma: no cover
         constructor = URL.create
 
     aur_db_backend = aurweb.config.get("database", "backend")
-    if aur_db_backend == "mysql":
-        param_query = {}
+    if aur_db_backend == "postgres":
         port = aurweb.config.get_with_fallback("database", "port", None)
+        host = aurweb.config.get_with_fallback("database", "host", None)
+        socket = None
         if not port:
-            param_query["unix_socket"] = aurweb.config.get("database", "socket")
-
+            socket = aurweb.config.get("database", "socket")
         return constructor(
             DRIVERS.get(aur_db_backend),
             username=aurweb.config.get("database", "user"),
             password=aurweb.config.get_with_fallback(
                 "database", "password", fallback=None
             ),
-            host=aurweb.config.get("database", "host"),
+            host=socket if socket else host,
             database=name(),
             port=port,
-            query=param_query,
         )
     elif aur_db_backend == "sqlite":
         return constructor(
@@ -292,12 +326,14 @@ def get_engine(dbname: str = None, echo: bool = False):
     if dbname not in _engines:
         db_backend = aurweb.config.get("database", "backend")
         connect_args = dict()
+        kwargs = {"echo": echo, "connect_args": connect_args}
 
         is_sqlite = bool(db_backend == "sqlite")
         if is_sqlite:  # pragma: no cover
             connect_args["check_same_thread"] = False
+        else:
+            kwargs["isolation_level"] = "READ_COMMITTED"
 
-        kwargs = {"echo": echo, "connect_args": connect_args}
         from sqlalchemy import create_engine
 
         _engines[dbname] = create_engine(get_sqlalchemy_url(), **kwargs)
@@ -352,7 +388,7 @@ class ConnectionExecutor:
 
         backend = backend or aurweb.config.get("database", "backend")
         self._conn = conn
-        if backend == "mysql":
+        if backend == "postgres":
             self._paramstyle = "format"
         elif backend == "sqlite":
             import sqlite3
@@ -393,20 +429,21 @@ class Connection:
 
         aur_db_backend = aurweb.config.get("database", "backend")
 
-        if aur_db_backend == "mysql":
-            import MySQLdb
+        if aur_db_backend == "postgres":
+            import psycopg2
 
-            aur_db_host = aurweb.config.get("database", "host")
+            aur_db_host = aurweb.config.get_with_fallback("database", "host", None)
             aur_db_name = name()
             aur_db_user = aurweb.config.get("database", "user")
             aur_db_pass = aurweb.config.get_with_fallback("database", "password", str())
-            aur_db_socket = aurweb.config.get("database", "socket")
-            self._conn = MySQLdb.connect(
-                host=aur_db_host,
+            aur_db_socket = aurweb.config.get_with_fallback("database", "socket", None)
+            aur_db_port = aurweb.config.get_with_fallback("database", "port", None)
+            self._conn = psycopg2.connect(
+                host=aur_db_host if not aur_db_socket else aur_db_socket,
                 user=aur_db_user,
-                passwd=aur_db_pass,
-                db=aur_db_name,
-                unix_socket=aur_db_socket,
+                password=aur_db_pass,
+                dbname=aur_db_name,
+                port=aur_db_port if not aur_db_socket else None,
             )
         elif aur_db_backend == "sqlite":  # pragma: no cover
             # TODO: SQLite support has been removed in FastAPI. It remains

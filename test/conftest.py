@@ -44,7 +44,7 @@ from multiprocessing import Lock
 import py
 import pytest
 from prometheus_client import values
-from sqlalchemy import create_engine
+from sqlalchemy import create_engine, text
 from sqlalchemy.engine import URL
 from sqlalchemy.engine.base import Engine
 from sqlalchemy.exc import ProgrammingError
@@ -52,6 +52,7 @@ from sqlalchemy.orm import scoped_session
 
 import aurweb.config
 import aurweb.db
+import aurweb.schema
 from aurweb import aur_logging, initdb, testing
 from aurweb.testing.email import Email
 from aurweb.testing.git import GitRepository
@@ -68,25 +69,28 @@ values.ValueClass = values.MutexValue
 
 def test_engine() -> Engine:
     """
-    Return a privileged SQLAlchemy engine with no database.
+    Return a privileged SQLAlchemy engine with default database.
 
     This method is particularly useful for providing an engine that
     can be used to create and drop databases from an SQL server.
 
-    :return: SQLAlchemy Engine instance (not connected to a database)
+    :return: SQLAlchemy Engine instance (connected to a default)
     """
-    unix_socket = aurweb.config.get_with_fallback("database", "socket", None)
+    socket = aurweb.config.get_with_fallback("database", "socket", None)
+    host = aurweb.config.get_with_fallback("database", "host", None)
+    port = aurweb.config.get_with_fallback("database", "port", None)
+
     kwargs = {
+        "database": aurweb.config.get("database", "name"),
         "username": aurweb.config.get("database", "user"),
         "password": aurweb.config.get_with_fallback("database", "password", None),
-        "host": aurweb.config.get("database", "host"),
-        "port": aurweb.config.get_with_fallback("database", "port", None),
-        "query": {"unix_socket": unix_socket},
+        "host": socket if socket else host,
+        "port": port if not socket else None,
     }
 
     backend = aurweb.config.get("database", "backend")
     driver = aurweb.db.DRIVERS.get(backend)
-    return create_engine(URL.create(driver, **kwargs))
+    return create_engine(URL.create(driver, **kwargs), isolation_level="AUTOCOMMIT")
 
 
 class AlembicArgs:
@@ -109,15 +113,16 @@ def _create_database(engine: Engine, dbname: str) -> None:
     :param dbname: Database name to create
     """
     conn = engine.connect()
-    try:
-        conn.execute(f"CREATE DATABASE {dbname}")
-    except ProgrammingError:  # pragma: no cover
-        # The database most likely already existed if we hit
-        # a ProgrammingError. Just drop the database and try
-        # again. If at that point things still fail, any
-        # exception will be propogated up to the caller.
-        conn.execute(f"DROP DATABASE {dbname}")
-        conn.execute(f"CREATE DATABASE {dbname}")
+    with conn.begin():
+        try:
+            conn.execute(text(f"CREATE DATABASE {dbname}"))
+        except ProgrammingError:  # pragma: no cover
+            # The database most likely already existed if we hit
+            # a ProgrammingError. Just drop the database and try
+            # again. If at that point things still fail, any
+            # exception will be propogated up to the caller.
+            conn.execute(text(f"DROP DATABASE {dbname} WITH (FORCE)"))
+            conn.execute(text(f"CREATE DATABASE {dbname}"))
     conn.close()
     initdb.run(AlembicArgs)
 
@@ -131,7 +136,7 @@ def _drop_database(engine: Engine, dbname: str) -> None:
     """
     aurweb.schema.metadata.drop_all(bind=engine)
     conn = engine.connect()
-    conn.execute(f"DROP DATABASE {dbname}")
+    conn.execute(text(f"DROP DATABASE {dbname}"))
     conn.close()
 
 
@@ -177,6 +182,10 @@ def db_session(setup_database: None) -> scoped_session:
     # Close the session and pop it.
     session.close()
     aurweb.db.pop_session(dbname)
+
+    # Dispose engine and close connections
+    aurweb.db.get_engine(dbname).dispose()
+    aurweb.db.pop_engine(dbname)
 
 
 @pytest.fixture

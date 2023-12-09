@@ -20,9 +20,10 @@ def test_run():
     from aurweb.schema import metadata
 
     aurweb.db.kill_engine()
-    metadata.drop_all(aurweb.db.get_engine())
+    metadata.drop_all(aurweb.db.get_engine(), checkfirst=False)
     aurweb.initdb.run(Args())
 
     # Check that constant table rows got added via initdb.
-    record = aurweb.db.query(AccountType, AccountType.AccountType == "User").first()
+    with aurweb.db.begin():
+        record = aurweb.db.query(AccountType, AccountType.AccountType == "User").first()
     assert record is not None

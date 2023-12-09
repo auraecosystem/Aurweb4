@@ -1,12 +1,13 @@
 import json
 
-from sqlalchemy.ext.declarative import declarative_base
+from sqlalchemy.orm import declarative_base
 
 from aurweb import util
 
 
 def to_dict(model):
-    return {c.name: getattr(model, c.name) for c in model.__table__.columns}
+    return {c.origname: getattr(model, c.origname) for c in model.__table__.columns}
+    # return {c.name: getattr(model, c.name) for c in model.__table__.columns}
 
 
 def to_json(model, indent: int = None):

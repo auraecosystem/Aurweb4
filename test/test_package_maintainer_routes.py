@@ -350,7 +350,7 @@ def test_pm_index_table_paging(client, pm_user):
                 VoteInfo,
                 Agenda=f"Agenda #{i}",
                 User=pm_user.Username,
-                Submitted=(ts - 5),
+                Submitted=(ts - 5 - i),
                 End=(ts + 1000),
                 Quorum=0.0,
                 Submitter=pm_user,
@@ -362,7 +362,7 @@ def test_pm_index_table_paging(client, pm_user):
                 VoteInfo,
                 Agenda=f"Agenda #{25 + i}",
                 User=pm_user.Username,
-                Submitted=(ts - 1000),
+                Submitted=(ts - 1000 - i),
                 End=(ts - 5),
                 Quorum=0.0,
                 Submitter=pm_user,
@@ -768,6 +768,7 @@ def test_pm_proposal_vote(client, proposal):
     assert response.status_code == int(HTTPStatus.OK)
 
     # Check that the proposal record got updated.
+    db.refresh(voteinfo)
     assert voteinfo.Yes == yes + 1
 
     # Check that the new PMVote exists.

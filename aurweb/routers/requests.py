@@ -95,7 +95,9 @@ async def requests(  # noqa: C901
 
     # Name filter (contains)
     if filter_pkg_name:
-        filtered = filtered.filter(PackageBase.Name.like(f"%{filter_pkg_name}%"))
+        filtered = filtered.filter(
+            PackageBase.Name.like(f"%{filter_pkg_name.lower()}%")
+        )
 
     # Additionally filter for requests made from package maintainer
     if filter_maintainer_requests:
@@ -110,7 +112,7 @@ async def requests(  # noqa: C901
         filtered.order_by(
             # Order primarily by the Status column being PENDING_ID,
             # and secondarily by RequestTS; both in descending order.
-            case([(PackageRequest.Status == PENDING_ID, 1)], else_=0).desc(),
+            case((PackageRequest.Status == PENDING_ID, 1), else_=0).desc(),
             PackageRequest.RequestTS.desc(),
         )
         .limit(PP)
