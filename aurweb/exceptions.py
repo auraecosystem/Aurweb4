@@ -85,6 +85,10 @@ class RPCError(AurwebException):
     pass
 
 
+class APIError(AurwebException):
+    pass
+
+
 class ValidationError(AurwebException):
     def __init__(self, data: Any, *args, **kwargs):
         super().__init__(*args, **kwargs)

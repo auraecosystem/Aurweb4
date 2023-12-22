@@ -208,3 +208,16 @@ def hash_query(query: Query):
     return sha1(
         str(query.statement.compile(compile_kwargs={"literal_binds": True})).encode()
     ).hexdigest()
+
+
+def remove_empty(value):
+    """
+    Recursively remove all None values from dictionaries and lists,
+    and return the result as a new dictionary or list.
+    """
+    if isinstance(value, list):
+        return [remove_empty(x) for x in value if x is not None]
+    elif isinstance(value, dict):
+        return {key: remove_empty(val) for key, val in value.items() if val is not None}
+    else:
+        return value
