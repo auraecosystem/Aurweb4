@@ -2,8 +2,9 @@ from fastapi import APIRouter, Request
 from fastapi.responses import Response
 from feedgen.feed import FeedGenerator
 
-from aurweb import db, filters
-from aurweb.models import Package, PackageBase
+from aurweb import db, filters, models
+from aurweb.models import Package, PackageBase, PackageComment
+from aurweb.packages.util import get_pkg_or_base
 
 router = APIRouter()
 
@@ -40,6 +41,55 @@ def make_rss_feed(request: Request, packages: list):
         entry.guid(f"{pkg.Name}-{pkg.Timestamp}")
 
     return feed.rss_str()
+
+
+def make_rss_feed_comments(request: Request, pkgbase: PackageBase, comments: list):
+    """Create an RSS Feed string for some packages.
+
+    :param request: A FastAPI request
+    :param comments: A list of comments to add the to RSS feed
+    :return: RSS Feed string
+    """
+
+    feed = FeedGenerator()
+    feed.title(f"AUR Newest Comments for {pkgbase.Name}")
+    feed.description(f"The 10 latest comments on {pkgbase.Name}")
+    base = f"{request.url.scheme}://{request.url.netloc}"
+    feed.link(href=base, rel="alternate")
+    feed.link(href=f"{base}/rss/comments/{pkgbase.Name}", rel="self")
+    feed.image(
+        title=f"AUR Newest Comments for {pkgbase.Name}",
+        url=f"{base}/static/css/archnavbar/aurlogo.png",
+        link=base,
+        description=f"The 10 latest comments on {pkgbase.Name}",
+    )
+
+    for comment in comments:
+        entry = feed.add_entry(order="append")
+        entry.title(comment.Comments[:60])
+        entry.link(
+            href=f"{base}/packages/{pkgbase.Name}#comment-{comment.ID}", rel="alternate"
+        )
+        entry.description(comment.Comments)
+        dt = filters.timestamp_to_datetime(comment.CommentTS)
+        dt = filters.as_timezone(dt, request.user.Timezone)
+        entry.pubDate(dt.strftime("%Y-%m-%d %H:%M:%S%z"))
+        entry.pubDate()
+        entry.guid(f"{pkgbase.Name}-{comment.ID}")
+
+    return feed.rss_str()
+
+
+@router.get("/rss/comments/{package_name}")
+async def comments(request: Request, package_name: str):
+    pkg = get_pkg_or_base(package_name, models.Package)
+    pkgbase = pkg.PackageBase
+    comments = pkgbase.comments.order_by(PackageComment.CommentTS.desc()).limit(10)
+
+    feed = make_rss_feed_comments(request, pkgbase, comments.all())
+    response = Response(feed, media_type="application/rss+xml")
+
+    return response
 
 
 @router.get("/rss/")
