@@ -267,7 +267,7 @@ def _main():
 
             # Construct our result JSON dictionary.
             item = as_dict(result)
-            item["URLPath"] = snapshot_uri % result.Name
+            item["URLPath"] = snapshot_uri % result.PackageBase
 
             # We stream out package json objects line per line, so
             # we also need to include the ',' character at the end
