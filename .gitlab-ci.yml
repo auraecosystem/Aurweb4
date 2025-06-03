@@ -13,7 +13,7 @@ variables:
   TEST_RECURSION_LIMIT: 10000
   CURRENT_DIR: "$(pwd)"
   LOG_CONFIG: logging.test.conf
-  DEV_FQDN: aurweb-$CI_COMMIT_REF_SLUG.sandbox.archlinux.page
+  DEV_FQDN: 'echo "aurweb-$${CI_COMMIT_REF_SLUG:0:32}.sandbox.archlinux.page"'
   INFRASTRUCTURE_REPO: https://gitlab.archlinux.org/archlinux/infrastructure.git
 
 lint:
