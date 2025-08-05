@@ -157,25 +157,28 @@ class User(Base):
             with db.begin():
                 db.delete(self.session)
 
-    def is_package_maintainer(self):
+    def is_moderator(self):
         return self.AccountType.ID in {
-            aurweb.models.account_type.PACKAGE_MAINTAINER_ID,
-            aurweb.models.account_type.PACKAGE_MAINTAINER_AND_DEV_ID,
+            aurweb.models.account_type.MODERATOR_ID,
+            aurweb.models.account_type.PACKAGE_MAINTAINER_AND_MOD_ID,
         }
 
-    def is_developer(self):
+    def is_package_maintainer(self):
         return self.AccountType.ID in {
-            aurweb.models.account_type.DEVELOPER_ID,
-            aurweb.models.account_type.PACKAGE_MAINTAINER_AND_DEV_ID,
+            # this moderator lineprobably shoudn't  be here,
+            # but is for testing while other sections are updates to use is_moderator
+            aurweb.models.account_type.MODERATOR_ID,
+            aurweb.models.account_type.PACKAGE_MAINTAINER_ID,
+            aurweb.models.account_type.PACKAGE_MAINTAINER_AND_MOD_ID,
         }
 
     def is_elevated(self):
         """A User is 'elevated' when they have either a
-        Package Maintainer or Developer AccountType."""
+        Package Maintainer or Moderator AccountType."""
         return self.AccountType.ID in {
+            aurweb.models.account_type.MODERATOR_ID,
             aurweb.models.account_type.PACKAGE_MAINTAINER_ID,
-            aurweb.models.account_type.DEVELOPER_ID,
-            aurweb.models.account_type.PACKAGE_MAINTAINER_AND_DEV_ID,
+            aurweb.models.account_type.PACKAGE_MAINTAINER_AND_MOD_ID,
         }
 
     def can_edit_user(self, target: "User") -> bool:

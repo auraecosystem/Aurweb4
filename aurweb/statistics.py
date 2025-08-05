@@ -4,8 +4,8 @@ from aurweb import config, db, time
 from aurweb.cache import db_count_cache, db_query_cache
 from aurweb.models import PackageBase, PackageRequest, RequestType, User
 from aurweb.models.account_type import (
-    PACKAGE_MAINTAINER_AND_DEV_ID,
-    PACKAGE_MAINTAINER_ID,
+    MODERATOR_ID,
+    PACKAGE_MAINTAINER_AND_MOD_ID,
     USER_ID,
 )
 from aurweb.models.package_request import (
@@ -100,8 +100,8 @@ class Statistics:
                 query = self.user_query.filter(
                     User.AccountTypeID.in_(
                         (
-                            PACKAGE_MAINTAINER_ID,
-                            PACKAGE_MAINTAINER_AND_DEV_ID,
+                            MODERATOR_ID,
+                            PACKAGE_MAINTAINER_AND_MOD_ID,
                         )
                     )
                 )

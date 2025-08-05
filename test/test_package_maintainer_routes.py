@@ -8,7 +8,7 @@ import pytest
 from fastapi.testclient import TestClient
 
 from aurweb import config, db, filters, time
-from aurweb.models.account_type import DEVELOPER_ID, PACKAGE_MAINTAINER_ID, AccountType
+from aurweb.models.account_type import PACKAGE_MAINTAINER_ID, AccountType
 from aurweb.models.user import User
 from aurweb.models.vote import Vote
 from aurweb.models.voteinfo import VoteInfo
@@ -787,7 +787,7 @@ def test_pm_proposal_vote_unauthorized(
     pm_user, user, voteinfo = proposal
 
     with db.begin():
-        pm_user.AccountTypeID = DEVELOPER_ID
+        pm_user.AccountTypeID = PACKAGE_MAINTAINER_ID
 
     cookies = {"AURSID": pm_user.login(Request(), "testPassword")}
     with client as request:

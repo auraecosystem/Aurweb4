@@ -1,6 +1,6 @@
 from aurweb.models.account_type import (
-    DEVELOPER_ID,
-    PACKAGE_MAINTAINER_AND_DEV_ID,
+    MODERATOR_ID,
+    PACKAGE_MAINTAINER_AND_MOD_ID,
     PACKAGE_MAINTAINER_ID,
     USER_ID,
 )
@@ -35,44 +35,47 @@ PM_LIST_VOTES = 20
 PM_VOTE = 21
 PKGBASE_MERGE = 29
 
-user_developer_or_package_maintainer = set(
-    [USER_ID, PACKAGE_MAINTAINER_ID, DEVELOPER_ID, PACKAGE_MAINTAINER_AND_DEV_ID]
+user_moderator_or_package_maintainer = set(
+    [USER_ID, MODERATOR_ID, PACKAGE_MAINTAINER_ID, PACKAGE_MAINTAINER_AND_MOD_ID]
 )
-package_maintainer_or_dev = set(
-    [PACKAGE_MAINTAINER_ID, DEVELOPER_ID, PACKAGE_MAINTAINER_AND_DEV_ID]
+moderator = set([MODERATOR_ID, PACKAGE_MAINTAINER_AND_MOD_ID])
+moderator_or_pm = set(
+    [MODERATOR_ID, PACKAGE_MAINTAINER_ID, PACKAGE_MAINTAINER_AND_MOD_ID]
 )
-developer = set([DEVELOPER_ID, PACKAGE_MAINTAINER_AND_DEV_ID])
-package_maintainer = set([PACKAGE_MAINTAINER_ID, PACKAGE_MAINTAINER_AND_DEV_ID])
+package_maintainer = set([PACKAGE_MAINTAINER_ID, PACKAGE_MAINTAINER_AND_MOD_ID])
+package_maintainer_or_mod = set(
+    [MODERATOR_ID, PACKAGE_MAINTAINER_ID, PACKAGE_MAINTAINER_AND_MOD_ID]
+)
 
 cred_filters = {
-    PKGBASE_FLAG: user_developer_or_package_maintainer,
-    PKGBASE_NOTIFY: user_developer_or_package_maintainer,
-    PKGBASE_VOTE: user_developer_or_package_maintainer,
-    PKGREQ_FILE: user_developer_or_package_maintainer,
-    ACCOUNT_CHANGE_TYPE: package_maintainer_or_dev,
-    ACCOUNT_EDIT: package_maintainer_or_dev,
-    ACCOUNT_LAST_LOGIN: package_maintainer_or_dev,
-    ACCOUNT_LIST_COMMENTS: package_maintainer_or_dev,
-    ACCOUNT_SEARCH: package_maintainer_or_dev,
-    COMMENT_DELETE: package_maintainer_or_dev,
-    COMMENT_UNDELETE: package_maintainer_or_dev,
-    COMMENT_VIEW_DELETED: package_maintainer_or_dev,
-    COMMENT_EDIT: package_maintainer_or_dev,
-    COMMENT_PIN: package_maintainer_or_dev,
-    PKGBASE_ADOPT: package_maintainer_or_dev,
-    PKGBASE_SET_KEYWORDS: package_maintainer_or_dev,
-    PKGBASE_DELETE: package_maintainer_or_dev,
-    PKGBASE_EDIT_COMAINTAINERS: package_maintainer_or_dev,
-    PKGBASE_DISOWN: package_maintainer_or_dev,
-    PKGBASE_LIST_VOTERS: package_maintainer_or_dev,
-    PKGBASE_UNFLAG: package_maintainer_or_dev,
-    PKGREQ_CLOSE: package_maintainer_or_dev,
-    PKGREQ_LIST: package_maintainer_or_dev,
+    PKGBASE_FLAG: user_moderator_or_package_maintainer,
+    PKGBASE_NOTIFY: user_moderator_or_package_maintainer,
+    PKGBASE_VOTE: user_moderator_or_package_maintainer,
+    PKGREQ_FILE: user_moderator_or_package_maintainer,
+    ACCOUNT_CHANGE_TYPE: moderator,
+    ACCOUNT_EDIT: moderator,
+    ACCOUNT_LAST_LOGIN: moderator,
+    ACCOUNT_LIST_COMMENTS: moderator,
+    ACCOUNT_SEARCH: moderator,
+    COMMENT_DELETE: moderator,
+    COMMENT_UNDELETE: moderator,
+    COMMENT_VIEW_DELETED: moderator,
+    COMMENT_EDIT: moderator,
+    COMMENT_PIN: moderator,
+    PKGBASE_ADOPT: moderator,
+    PKGBASE_SET_KEYWORDS: moderator,
+    PKGBASE_DELETE: moderator,
+    PKGBASE_EDIT_COMAINTAINERS: moderator,
+    PKGBASE_DISOWN: moderator,
+    PKGBASE_LIST_VOTERS: moderator,
+    PKGBASE_UNFLAG: moderator,
+    PKGREQ_CLOSE: moderator,
+    PKGREQ_LIST: moderator,
     PM_ADD_VOTE: package_maintainer,
-    PM_LIST_VOTES: package_maintainer_or_dev,
+    PM_LIST_VOTES: moderator,
     PM_VOTE: package_maintainer,
-    ACCOUNT_EDIT_DEV: developer,
-    PKGBASE_MERGE: package_maintainer_or_dev,
+    ACCOUNT_EDIT_DEV: package_maintainer,
+    PKGBASE_MERGE: moderator,
 }
 
 
