@@ -1,3 +1,6 @@
+import hashlib
+from datetime import datetime, timezone
+
 from fastapi import APIRouter, Request
 from fastapi.responses import Response
 from feedgen.feed import FeedGenerator
@@ -62,6 +65,17 @@ async def rss(request: Request):
     feed = lambda_cache("rss", lambda: make_rss_feed(request, packages), cache_expire)
 
     response = Response(feed, media_type="application/rss+xml")
+    add_cache_headers(response, cache_expire)
+
+    # Handle conditional request
+    if_none_match = request.headers.get("If-None-Match")
+    if (
+        if_none_match
+        and "ETag" in response.headers
+        and if_none_match == response.headers["ETag"]
+    ):
+        return Response(status_code=304)
+
     return response
 
 
@@ -86,4 +100,34 @@ async def rss_modified(request: Request):
     )
 
     response = Response(feed, media_type="application/rss+xml")
+    add_cache_headers(response, cache_expire)
+
+    # Handle conditional request
+    if_none_match = request.headers.get("If-None-Match")
+    if (
+        if_none_match
+        and "ETag" in response.headers
+        and if_none_match == response.headers["ETag"]
+    ):
+        return Response(status_code=304)
+
     return response
+
+
+def add_cache_headers(response: Response, cache_expire: int) -> None:
+    """Add HTTP caching headers to the RSS feed response.
+
+    :param response: The FastAPI Response object
+    :param cache_expire: Cache expiration time in seconds
+    """
+    # Set Cache-Control header
+    response.headers["Cache-Control"] = f"public, max-age={cache_expire}"
+
+    # Set Last-Modified header
+    now = datetime.now(timezone.utc)
+    response.headers["Last-Modified"] = now.strftime("%a, %d %b %Y %H:%M:%S GMT")
+
+    # Set ETag header (based on content hash)
+    if hasattr(response, "body") and response.body:
+        etag = hashlib.md5(response.body).hexdigest()
+        response.headers["ETag"] = f'"{etag}"'
