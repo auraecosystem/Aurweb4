@@ -16,9 +16,8 @@ from aurweb.asgi import app
 from aurweb.db import create, query
 from aurweb.models.accepted_term import AcceptedTerm
 from aurweb.models.account_type import (
-    DEVELOPER_ID,
-    PACKAGE_MAINTAINER,
-    PACKAGE_MAINTAINER_AND_DEV_ID,
+    MODERATOR_ID,
+    PACKAGE_MAINTAINER_AND_MOD_ID,
     PACKAGE_MAINTAINER_ID,
     USER_ID,
     AccountType,
@@ -98,7 +97,7 @@ def user() -> User:
 @pytest.fixture
 def pm_user(user: User):
     with db.begin():
-        user.AccountTypeID = PACKAGE_MAINTAINER_AND_DEV_ID
+        user.AccountTypeID = PACKAGE_MAINTAINER_AND_MOD_ID
     yield user
 
 
@@ -814,53 +813,6 @@ def test_post_account_edit_type_as_pm(client: TestClient, pm_user: User):
     assert resp.status_code == int(HTTPStatus.OK)
 
 
-def test_post_account_edit_type_as_dev(client: TestClient, pm_user: User):
-    with db.begin():
-        user2 = create_user("test2")
-        pm_user.AccountTypeID = at.DEVELOPER_ID
-
-    cookies = {"AURSID": pm_user.login(Request(), "testPassword")}
-    endpoint = f"/account/{user2.Username}/edit"
-    data = {
-        "U": user2.Username,
-        "E": user2.Email,
-        "T": at.DEVELOPER_ID,
-        "passwd": "testPassword",
-    }
-    with client as request:
-        request.cookies = cookies
-        resp = request.post(endpoint, data=data)
-    assert resp.status_code == int(HTTPStatus.OK)
-    assert user2.AccountTypeID == at.DEVELOPER_ID
-
-
-def test_post_account_edit_invalid_type_as_pm(client: TestClient, pm_user: User):
-    with db.begin():
-        user2 = create_user("test_pm")
-        pm_user.AccountTypeID = at.PACKAGE_MAINTAINER_ID
-
-    cookies = {"AURSID": pm_user.login(Request(), "testPassword")}
-    endpoint = f"/account/{user2.Username}/edit"
-    data = {
-        "U": user2.Username,
-        "E": user2.Email,
-        "T": at.DEVELOPER_ID,
-        "passwd": "testPassword",
-    }
-    with client as request:
-        request.cookies = cookies
-        resp = request.post(endpoint, data=data)
-    assert resp.status_code == int(HTTPStatus.BAD_REQUEST)
-    assert user2.AccountTypeID == at.USER_ID
-
-    errors = get_errors(resp.text)
-    expected = (
-        "You do not have permission to change this user's "
-        f"account type to {at.DEVELOPER}."
-    )
-    assert errors[0].text.strip() == expected
-
-
 def test_post_account_edit_dev(client: TestClient, pm_user: User):
     # Modify our user to be a "Package Maintainer & Developer"
     name = "Package Maintainer & Developer"
@@ -1315,7 +1267,7 @@ def test_post_account_edit_other_user_type_as_pm(
     expected = (
         f"Package Maintainer '{pm_user.Username}' has "
         f"modified '{user2.Username}' account's type to"
-        f" {PACKAGE_MAINTAINER}."
+        f" {PACKAGE_MAINTAINER_ID}."
     )
     assert expected in caplog.text
 
@@ -1620,26 +1572,8 @@ def test_post_accounts_account_type(client: TestClient, user: User, pm_user: Use
 
     with db.begin():
         user.AccountType = (
-            query(AccountType).filter(AccountType.ID == DEVELOPER_ID).first()
-        )
-
-    with client as request:
-        request.cookies = cookies
-        response = request.post("/accounts", data={"T": "d"})
-    assert response.status_code == int(HTTPStatus.OK)
-
-    rows = get_rows(response.text)
-    assert len(rows) == 1
-
-    row = next(iter(rows))
-    username, type, status, realname, irc, pgp_key, edit = row
-
-    assert type.text.strip() == "Developer"
-
-    with db.begin():
-        user.AccountType = (
             query(AccountType)
-            .filter(AccountType.ID == PACKAGE_MAINTAINER_AND_DEV_ID)
+            .filter(AccountType.ID == PACKAGE_MAINTAINER_AND_MOD_ID)
             .first()
         )
 
@@ -1736,7 +1670,7 @@ def test_post_accounts_sortby(client: TestClient, user: User, pm_user: User):
     # Create a second user so we can compare sorts.
     with db.begin():
         user_ = create_user("test2")
-        user_.AccountTypeID = DEVELOPER_ID
+        user_.AccountTypeID = MODERATOR_ID
 
     sid = user.login(Request(), "testPassword")
     cookies = {"AURSID": sid}
@@ -1787,7 +1721,7 @@ def test_post_accounts_sortby(client: TestClient, user: User, pm_user: User):
     with db.begin():
         user.AccountType = (
             query(AccountType)
-            .filter(AccountType.ID == PACKAGE_MAINTAINER_AND_DEV_ID)
+            .filter(AccountType.ID == PACKAGE_MAINTAINER_AND_MOD_ID)
             .first()
         )
 

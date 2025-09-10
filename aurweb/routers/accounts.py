@@ -184,9 +184,9 @@ def make_account_form_context(
             lambda e: request.user.AccountTypeID >= e[0],
             [
                 (at.USER_ID, f"Normal {at.USER}"),
+                (at.MODERATOR_ID, at.MODERATOR),
                 (at.PACKAGE_MAINTAINER_ID, at.PACKAGE_MAINTAINER),
-                (at.DEVELOPER_ID, at.DEVELOPER),
-                (at.PACKAGE_MAINTAINER_AND_DEV_ID, at.PACKAGE_MAINTAINER_AND_DEV),
+                (at.PACKAGE_MAINTAINER_AND_MOD_ID, at.PACKAGE_MAINTAINER_AND_MOD),
             ],
         )
     )
@@ -521,7 +521,7 @@ async def account_comments(request: Request, username: str):
 @router.get("/accounts")
 @requires_auth
 @account_type_required(
-    {at.PACKAGE_MAINTAINER, at.DEVELOPER, at.PACKAGE_MAINTAINER_AND_DEV}
+    {at.MODERATOR, at.PACKAGE_MAINTAINER, at.PACKAGE_MAINTAINER_AND_MOD}
 )
 async def accounts(request: Request):
     context = make_context(request, "Accounts")
@@ -532,7 +532,7 @@ async def accounts(request: Request):
 @handle_form_exceptions
 @requires_auth
 @account_type_required(
-    {at.PACKAGE_MAINTAINER, at.DEVELOPER, at.PACKAGE_MAINTAINER_AND_DEV}
+    {at.MODERATOR, at.PACKAGE_MAINTAINER, at.PACKAGE_MAINTAINER_AND_MOD}
 )
 async def accounts_post(
     request: Request,
@@ -568,9 +568,9 @@ async def accounts_post(
     # Convert parameter T to an AccountType ID.
     account_types = {
         "u": at.USER_ID,
+        "m": at.MODERATOR_ID,
         "t": at.PACKAGE_MAINTAINER_ID,
-        "d": at.DEVELOPER_ID,
-        "td": at.PACKAGE_MAINTAINER_AND_DEV_ID,
+        "td": at.PACKAGE_MAINTAINER_AND_MOD_ID,
     }
     account_type_id = account_types.get(T, None)
 

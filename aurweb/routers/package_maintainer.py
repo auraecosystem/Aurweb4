@@ -12,7 +12,8 @@ from aurweb.auth import creds, requires_auth
 from aurweb.exceptions import handle_form_exceptions
 from aurweb.models import User
 from aurweb.models.account_type import (
-    PACKAGE_MAINTAINER_AND_DEV_ID,
+    MODERATOR_ID,
+    PACKAGE_MAINTAINER_AND_MOD_ID,
     PACKAGE_MAINTAINER_ID,
 )
 from aurweb.templates import make_context, make_variable_context, render_template
@@ -39,8 +40,9 @@ ADDVOTE_SPECIFICS = {
 def populate_package_maintainer_counts(context: dict[str, Any]) -> None:
     pm_query = db.query(User).filter(
         or_(
+            User.AccountTypeID == MODERATOR_ID,
             User.AccountTypeID == PACKAGE_MAINTAINER_ID,
-            User.AccountTypeID == PACKAGE_MAINTAINER_AND_DEV_ID,
+            User.AccountTypeID == PACKAGE_MAINTAINER_AND_MOD_ID,
         )
     )
     context["package_maintainer_count"] = pm_query.count()
@@ -363,7 +365,7 @@ async def package_maintainer_addvote_post(
     timestamp = time.utcnow()
 
     # Active PM types we filter for.
-    types = {PACKAGE_MAINTAINER_ID, PACKAGE_MAINTAINER_AND_DEV_ID}
+    types = {MODERATOR_ID, PACKAGE_MAINTAINER_ID, PACKAGE_MAINTAINER_AND_MOD_ID}
 
     # Create a new VoteInfo (proposal)!
     with db.begin():

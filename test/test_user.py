@@ -11,8 +11,8 @@ import aurweb.models.account_type as at
 from aurweb import db
 from aurweb.auth import creds
 from aurweb.models.account_type import (
-    DEVELOPER_ID,
-    PACKAGE_MAINTAINER_AND_DEV_ID,
+    MODERATOR_ID,
+    PACKAGE_MAINTAINER_AND_MOD_ID,
     PACKAGE_MAINTAINER_ID,
     USER_ID,
 )
@@ -52,20 +52,20 @@ def user() -> User:
 
 
 @pytest.fixture
+def mod_user() -> User:
+    user = create_user("test_mod", MODERATOR_ID)
+    yield user
+
+
+@pytest.fixture
 def pm_user() -> User:
     user = create_user("test_pm", PACKAGE_MAINTAINER_ID)
     yield user
 
 
 @pytest.fixture
-def dev_user() -> User:
-    user = create_user("test_dev", DEVELOPER_ID)
-    yield user
-
-
-@pytest.fixture
 def pm_and_dev_user() -> User:
-    user = create_user("test_pm_and_dev", PACKAGE_MAINTAINER_AND_DEV_ID)
+    user = create_user("test_pm_and_mod", PACKAGE_MAINTAINER_AND_MOD_ID)
     yield user
 
 
@@ -207,29 +207,22 @@ def test_user_ssh_pub_key(user: User):
 
 
 def test_user_credential_types(user: User):
-    assert user.AccountTypeID in creds.user_developer_or_package_maintainer
+    assert user.AccountTypeID in creds.user_moderator_or_package_maintainer
     assert user.AccountTypeID not in creds.package_maintainer
-    assert user.AccountTypeID not in creds.developer
-    assert user.AccountTypeID not in creds.package_maintainer_or_dev
+    assert user.AccountTypeID not in creds.package_maintainer_or_mod
 
     with db.begin():
         user.AccountTypeID = at.PACKAGE_MAINTAINER_ID
 
     assert user.AccountTypeID in creds.package_maintainer
-    assert user.AccountTypeID in creds.package_maintainer_or_dev
+    assert user.AccountTypeID in creds.package_maintainer_or_mod
 
     with db.begin():
-        user.AccountTypeID = at.DEVELOPER_ID
+        user.AccountTypeID = at.PACKAGE_MAINTAINER_AND_MOD_ID
 
-    assert user.AccountTypeID in creds.developer
-    assert user.AccountTypeID in creds.package_maintainer_or_dev
-
-    with db.begin():
-        user.AccountTypeID = at.PACKAGE_MAINTAINER_AND_DEV_ID
-
+    assert user.AccountTypeID in creds.moderator
     assert user.AccountTypeID in creds.package_maintainer
-    assert user.AccountTypeID in creds.developer
-    assert user.AccountTypeID in creds.package_maintainer_or_dev
+    assert user.AccountTypeID in creds.package_maintainer_or_mod
 
     # Some model authorization checks.
     assert user.is_elevated()
@@ -262,18 +255,12 @@ def test_user_is_package_maintainer(user: User):
 
     # Do it again with the combined role.
     with db.begin():
-        user.AccountTypeID = at.PACKAGE_MAINTAINER_AND_DEV_ID
+        user.AccountTypeID = at.PACKAGE_MAINTAINER_AND_MOD_ID
     assert user.is_package_maintainer() is True
-
-
-def test_user_is_developer(user: User):
-    with db.begin():
-        user.AccountTypeID = at.DEVELOPER_ID
-    assert user.is_developer() is True
 
     # Do it again with the combined role.
     with db.begin():
-        user.AccountTypeID = at.PACKAGE_MAINTAINER_AND_DEV_ID
+        user.AccountTypeID = at.PACKAGE_MAINTAINER_AND_MOD_ID
     assert user.is_developer() is True
 
 
