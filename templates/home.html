@@ -8,10 +8,12 @@
                      '<a href="https://wiki.archlinux.org/title/PKGBUILD">', "</a>")
             | safe
         }}
-        {{ "Contributed PKGBUILDs %smust%s conform to the %sArch Packaging Standards%s otherwise they will be deleted!"
+        {{ "Contributed %sPKGBUILDs%s %smust%s conform to the %sArch Package Guidelines%s otherwise they will be deleted!"
             | tr
-        | format("<strong>", "</strong>",
-             '<a href="https://wiki.archlinux.org/title/Arch_Packaging_Standards">',
+        | format(
+                '<a href="https://wiki.archlinux.org/title/PKGBUILD">', "</a>",
+            "<strong>", "</strong>",
+             '<a href="https://wiki.archlinux.org/title/Arch_package_guidelines">',
              "</a>")
             | safe
         }}
