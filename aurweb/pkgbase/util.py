@@ -16,7 +16,10 @@ from aurweb.templates import make_context as _make_context
 
 
 def make_context(
-    request: Request, pkgbase: PackageBase, context: dict[str, Any] | None = None
+    request: Request,
+    pkgbase: PackageBase,
+    context: dict[str, Any] | None = None,
+    title: str | None = None,
 ) -> dict[str, Any]:
     """Make a basic context for package or pkgbase.
 
@@ -25,7 +28,7 @@ def make_context(
     :return: A pkgbase context without specific differences
     """
     if not context:
-        context = _make_context(request, pkgbase.Name)
+        context = _make_context(request, title or pkgbase.Name)
 
     is_authenticated = request.user.is_authenticated()
 
