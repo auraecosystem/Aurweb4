@@ -13,7 +13,7 @@ from aurweb.models.account_type import PACKAGE_MAINTAINER_ID, USER_ID
 from aurweb.models.package_comaintainer import PackageComaintainer
 from aurweb.models.package_notification import PackageNotification
 from aurweb.models.package_request import ACCEPTED_ID, PENDING_ID, REJECTED_ID
-from aurweb.models.request_type import DELETION_ID, MERGE_ID, ORPHAN_ID
+from aurweb.models.request_type import DELETION_ID, MERGE_ID, ORPHAN_ID, REPORT_ID, RENAME_ID
 from aurweb.packages.requests import ClosureFactory
 from aurweb.requests.util import get_pkgreq_by_id
 from aurweb.testing.email import Email
@@ -413,6 +413,56 @@ def test_request_post_orphan(client: TestClient, auser: User, pkgbase: PackageBa
 
     email = Email(1)
     expr = r"^\[PRQ#%d\] Orphan Request for [^ ]+$" % pkgreq.ID
+    assert re.match(expr, email.headers.get("Subject"))
+
+
+def test_request_post_report(client: TestClient, auser: User, pkgbase: PackageBase):
+    """Test the POST route for creating a report request works."""
+    endpoint = f"/pkgbase/{pkgbase.Name}/request"
+    data = {
+        "type": "report",
+        "comments": "Test report request.",
+    }
+    with client as request:
+        request.cookies = auser.cookies
+        resp = request.post(endpoint, data=data)
+    assert resp.status_code == int(HTTPStatus.SEE_OTHER)
+
+    pkgreq = pkgbase.requests.first()
+    assert pkgreq is not None
+    assert pkgreq.ReqTypeID == REPORT_ID
+    assert pkgreq.Status == PENDING_ID
+
+    # A RequestOpenNotification should've been sent out.
+    assert Email.count() == 1
+
+    email = Email(1)
+    expr = r"^\[PRQ#%d\] Report Request for [^ ]+$" % pkgreq.ID
+    assert re.match(expr, email.headers.get("Subject"))
+
+
+def test_request_post_rename(client: TestClient, auser: User, pkgbase: PackageBase):
+    """Test the POST route for creating a rename request works."""
+    endpoint = f"/pkgbase/{pkgbase.Name}/request"
+    data = {
+        "type": "rename",
+        "comments": "Test rename request.",
+    }
+    with client as request:
+        request.cookies = auser.cookies
+        resp = request.post(endpoint, data=data)
+    assert resp.status_code == int(HTTPStatus.SEE_OTHER)
+
+    pkgreq = pkgbase.requests.first()
+    assert pkgreq is not None
+    assert pkgreq.ReqTypeID == RENAME_ID
+    assert pkgreq.Status == PENDING_ID
+
+    # A RequestOpenNotification should've been sent out.
+    assert Email.count() == 1
+
+    email = Email(1)
+    expr = r"^\[PRQ#%d\] Rename Request for [^ ]+$" % pkgreq.ID
     assert re.match(expr, email.headers.get("Subject"))
 
 
