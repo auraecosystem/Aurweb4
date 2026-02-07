@@ -13,7 +13,13 @@ from aurweb.models.package_keyword import PackageKeyword
 from aurweb.models.package_notification import PackageNotification
 from aurweb.models.package_request import ACCEPTED_ID, PENDING_ID, PackageRequest
 from aurweb.models.package_vote import PackageVote
-from aurweb.models.request_type import DELETION_ID, MERGE_ID, ORPHAN_ID, REPORT_ID, RENAME_ID
+from aurweb.models.request_type import (
+    DELETION_ID,
+    MERGE_ID,
+    ORPHAN_ID,
+    REPORT_ID,
+    RENAME_ID,
+)
 from aurweb.packages.requests import update_closure_comment
 from aurweb.packages.util import get_pkg_or_base, get_pkgbase_comment
 from aurweb.pkgbase import actions, validate
@@ -764,7 +770,13 @@ async def pkgbase_request_post(
     context = await make_variable_context(request, "Submit Request")
     context["pkgbase"] = pkgbase
 
-    types = {"deletion": DELETION_ID, "merge": MERGE_ID, "orphan": ORPHAN_ID, "report": REPORT_ID, "rename": RENAME_ID}
+    types = {
+        "deletion": DELETION_ID,
+        "merge": MERGE_ID,
+        "orphan": ORPHAN_ID,
+        "report": REPORT_ID,
+        "rename": RENAME_ID,
+    }
 
     if type not in types:
         # In the case that someone crafted a POST request with an invalid

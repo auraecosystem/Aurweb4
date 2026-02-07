@@ -13,7 +13,13 @@ from aurweb.models.account_type import PACKAGE_MAINTAINER_ID, USER_ID
 from aurweb.models.package_comaintainer import PackageComaintainer
 from aurweb.models.package_notification import PackageNotification
 from aurweb.models.package_request import ACCEPTED_ID, PENDING_ID, REJECTED_ID
-from aurweb.models.request_type import DELETION_ID, MERGE_ID, ORPHAN_ID, REPORT_ID, RENAME_ID
+from aurweb.models.request_type import (
+    DELETION_ID,
+    MERGE_ID,
+    ORPHAN_ID,
+    REPORT_ID,
+    RENAME_ID,
+)
 from aurweb.packages.requests import ClosureFactory
 from aurweb.requests.util import get_pkgreq_by_id
 from aurweb.testing.email import Email

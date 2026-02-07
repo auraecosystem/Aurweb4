@@ -13,6 +13,7 @@ MERGE_ID = 3
 REPORT_ID = 4
 RENAME_ID = 5
 
+
 class RequestType(Base):
     __table__ = schema.RequestTypes
     __tablename__ = __table__.name
