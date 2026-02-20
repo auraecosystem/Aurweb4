@@ -16,7 +16,14 @@ pacman -Syu --noconfirm --noprogressbar \
     git gpgme nginx valkey openssh \
     mariadb mariadb-libs cgit-aurweb uwsgi uwsgi-plugin-cgi \
     python-pip pyalpm python-srcinfo python-alpm curl libeatmydata cronie \
-    python-poetry python-poetry-core step-cli step-ca asciidoc \
-    python-virtualenv python-pre-commit libgit2
+    step-cli step-ca asciidoc python-virtualenv python-pre-commit libgit2
+
+# Install poetry via pip so that poetry-core is always resolved as a
+# compatible dependency.  The Arch packages (python-poetry and
+# python-poetry-core) are versioned independently and can fall out of
+# sync on the rolling release, causing ImportErrors like the one where
+# poetry 2.2.x tried to import `temporary_directory` from a poetry-core
+# 2.3.x that had already removed it.
+pip install --break-system-packages --upgrade poetry
 
 exec "$@"
