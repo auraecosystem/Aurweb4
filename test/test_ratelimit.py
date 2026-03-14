@@ -87,11 +87,14 @@ def test_ratelimit_redis(
     # This check_ratelimit should fail, being the 4001th request.
     assert check_ratelimit(request)
 
-    # Delete the Redis keys.
+    # Delete the Redis keys via a fresh connection so that the mock-driven
+    # backend (which may differ from the fixture's pre-mock connection) is
+    # used consistently for the cleanup assertions.
     host = request.client.host
-    pipeline.delete(f"ratelimit-ws:{host}")
-    pipeline.delete(f"ratelimit:{host}")
-    one, two = pipeline.execute()
+    cleanup = redis_connection().pipeline()
+    cleanup.delete(f"ratelimit-ws:{host}")
+    cleanup.delete(f"ratelimit:{host}")
+    one, two = cleanup.execute()
     assert one and two
 
     # Should be good to go again!

@@ -39,12 +39,12 @@ def redis_connection():  # pragma: no cover
 
     # If we haven't initialized redis yet, construct a pool.
     if disabled:
-        if pool is None:
+        if not isinstance(pool, FakeConnectionPool):
             logger.debug("Initializing fake Redis instance.")
             pool = FakeConnectionPool()
         return pool.handle
     else:
-        if pool is None:
+        if not isinstance(pool, ConnectionPool):
             logger.debug("Initializing real Redis instance.")
             redis_addr = aurweb.config.get("options", "redis_address")
             pool = ConnectionPool.from_url(redis_addr)
