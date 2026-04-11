@@ -20,6 +20,7 @@ def simple(
     K: str = str(),
     J: bool = False,
     CN: bool = False,
+    SCN: bool = False,
     UN: bool = False,
     ON: bool = False,
     HDC: bool = False,
@@ -40,6 +41,7 @@ def simple(
         user.Suspended = strtobool(S)
         user.InactivityTS = now * int(strtobool(J))
         user.CommentNotify = strtobool(CN)
+        user.CommentNotifySelf = strtobool(SCN)
         user.UpdateNotify = strtobool(UN)
         user.OwnershipNotify = strtobool(ON)
         user.HideDeletedComments = strtobool(HDC)

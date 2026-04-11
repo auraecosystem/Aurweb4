@@ -305,6 +305,17 @@
             >
         </p>
         <p>
+            <label for="id_commentnotifyself">
+                {% trans %}Notify me of my own comments{% endtrans %}:
+            </label>
+
+            <input id="id_commentnotifyself" type="checkbox" name="SCN"
+                {% if scn %}
+                    checked="checked"
+                {% endif %}
+            >
+        </p>
+        <p>
             <label for="id_updatenotify">
                 {% trans %}Notify of package updates{% endtrans %}:
             </label>

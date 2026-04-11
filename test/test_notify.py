@@ -192,6 +192,7 @@ def test_comment(user: User, user2: User, pkgbases: list[PackageBase]):
     pkgbase = pkgbases[0]
 
     with db.begin():
+        db.create(models.PackageNotification, PackageBase=pkgbase, User=user2)
         comment = db.create(
             models.PackageComment,
             PackageBase=pkgbase,
@@ -222,6 +223,30 @@ please go to the package page [2] and select "Disable notifications".
 [2] {aur_location}/pkgbase/{pkgbase.Name}/\
 """
     assert expected == email.body
+
+
+def test_comment_self_notification_enabled(
+    user: User, user2: User, pkgbases: list[PackageBase]
+):
+    pkgbase = pkgbases[0]
+
+    with db.begin():
+        user2.CommentNotifySelf = 1
+        db.create(models.PackageNotification, PackageBase=pkgbase, User=user2)
+        comment = db.create(
+            models.PackageComment,
+            PackageBase=pkgbase,
+            User=user2,
+            Comments="This is a test comment.",
+        )
+    rendercomment.update_comment_render_fastapi(comment)
+
+    notif = notify.CommentNotification(user2.ID, pkgbase.ID, comment.ID)
+    notif.send()
+    assert Email.count() == 2
+
+    recipients = {Email(i).parse().headers.get("To") for i in range(1, 3)}
+    assert recipients == {user.Email, user2.Email}
 
 
 def test_update(user: User, user2: User, pkgbases: list[PackageBase]):

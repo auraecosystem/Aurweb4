@@ -103,6 +103,7 @@ Users = Table(
         server_default=text("CURRENT_TIMESTAMP"),
     ),
     Column("CommentNotify", TINYINT(1), nullable=False, server_default=text("1")),
+    Column("CommentNotifySelf", TINYINT(1), nullable=False, server_default=text("0")),
     Column("UpdateNotify", TINYINT(1), nullable=False, server_default=text("0")),
     Column("OwnershipNotify", TINYINT(1), nullable=False, server_default=text("1")),
     Column("SSOAccountID", String(255), nullable=True, unique=True),

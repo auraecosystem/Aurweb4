@@ -207,6 +207,7 @@ def make_account_form_context(
         ssh_pks = [pk.PubKey for pk in user.ssh_pub_keys]
         context["ssh_pks"] = args.get("PK", ssh_pks)
         context["cn"] = args.get("CN", user.CommentNotify)
+        context["scn"] = args.get("SCN", user.CommentNotifySelf)
         context["un"] = args.get("UN", user.UpdateNotify)
         context["on"] = args.get("ON", user.OwnershipNotify)
         context["hdc"] = args.get("HDC", user.HideDeletedComments)
@@ -226,6 +227,7 @@ def make_account_form_context(
         context["tz"] = args.get("TZ", context.get("timezone"))
         context["ssh_pks"] = args.get("PK", str())
         context["cn"] = args.get("CN", True)
+        context["scn"] = args.get("SCN", False)
         context["un"] = args.get("UN", False)
         context["on"] = args.get("ON", True)
         context["hdc"] = args.get("HDC", False)
@@ -423,6 +425,7 @@ async def account_edit_post(
     S: bool = Form(default=False),  # Suspended
     PK: str = Form(default=None),  # PubKey
     CN: bool = Form(default=False),  # Comment Notify
+    SCN: bool = Form(default=False),  # Self Comment Notify
     UN: bool = Form(default=False),  # Update Notify
     ON: bool = Form(default=False),  # Owner Notify
     HDC: bool = Form(default=False),  # Hide Deleted Comments
