@@ -70,7 +70,7 @@ def test_archdev_navbar(client: TestClient):
 
 
 def test_archdev_navbar_authenticated(client: TestClient, user: User):
-    expected = ["Dashboard", "Packages", "Requests", "My Account", "Logout"]
+    expected = ["Dashboard", "Packages", "Requests", "My Account", "API Keys", "Logout"]
     cookies = {"AURSID": user.login(Request(), "testPassword")}
     with client as request:
         request.cookies = cookies
@@ -90,6 +90,7 @@ def test_archdev_navbar_authenticated_pm(client: TestClient, package_maintainer:
         "Requests",
         "Accounts",
         "My Account",
+        "API Keys",
         "Package Maintainer",
         "Logout",
     ]
