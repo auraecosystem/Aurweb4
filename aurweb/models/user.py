@@ -121,6 +121,7 @@ class User(Base):
             now_ts = time.utcnow()
             try:
                 with db.begin():
+                    db.get_session().refresh(self, with_for_update=True)
                     self.LastLogin = now_ts
                     self.LastLoginIPAddress = util.get_client_ip(request)
 
