@@ -1,3 +1,4 @@
+{% from "partials/account/link.html" import account_link with context %}
 <table id="pkginfo">
     <tr>
         <th>{{ "Git Clone URL" | tr }}:</th>
@@ -102,46 +103,21 @@
     {% endif %}
     <tr>
         <th>{{ "Submitter" | tr }}:</th>
-        <td>
-            {% if request.user.is_authenticated() and pkgbase.Submitter %}
-                <a href="/account/{{ pkgbase.Submitter.Username }}">
-                    {{ pkgbase.Submitter.Username }}
-                </a>
-            {% else %}
-                {{ pkgbase.Submitter.Username | default("None" | tr) }}
-            {% endif %}
-        </td>
+        <td>{{ account_link(pkgbase.Submitter) }}</td>
     </tr>
     <tr class="pkgmaint">
         <th>{{ "Maintainer" | tr }}:</th>
         <td>
-            {% if request.user.is_authenticated() and pkgbase.Maintainer %}
-                <a href="/account/{{ pkgbase.Maintainer.Username }}">
-                    {{ pkgbase.Maintainer.Username }}
-                </a>
+            {{ account_link(pkgbase.Maintainer) }}
+            {% if pkgbase.Maintainer and comaintainers %}
                 {% set len = comaintainers | length %}
-                {% if comaintainers %}
-                    ({% for co in comaintainers %}<a href="{{ co | account_url }}">{{ co }}</a>{% if loop.index < len %}, {% endif %}{% endfor %})
-                {% endif %}
-            {% else %}
-                {{ pkgbase.Maintainer.Username | default("None" | tr) }}
-                {% if comaintainers %}
-		     ({{ comaintainers|join(', ') }})
-                {% endif %}
+                ({% for co in comaintainers %}{{ account_link(co) }}{% if loop.index < len %}, {% endif %}{% endfor %})
             {% endif %}
         </td>
     </tr>
     <tr>
         <th>{{ "Last Packager" | tr }}:</th>
-        <td>
-            {% if request.user.is_authenticated() and pkgbase.Packager %}
-                <a href="/account/{{ pkgbase.Packager.Username }}">
-                    {{ pkgbase.Packager.Username }}
-                </a>
-            {% else %}
-                {{ pkgbase.Packager.Username | default("None" | tr) }}
-            {% endif %}
-        </td>
+        <td>{{ account_link(pkgbase.Packager) }}</td>
     </tr>
     <tr>
         <th>{{ "Votes" | tr }}:</th>

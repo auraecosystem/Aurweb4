@@ -1,0 +1,36 @@
+{% macro account_link(user) %}
+    {% if not user or not user.Username %}
+        {{ "None" | tr }}
+    {% else %}
+        {% set account_age = (utcnow - user.RegistrationTS.timestamp()) // 60 // 60 // 24 %}
+        {% if not request.user.is_authenticated() %}
+            <span
+                {% if user.Suspended %}
+                    title="{{ "Status" | tr }}: {{ "Suspended" | tr }}"
+                    class="user-suspended"
+                {% elif user.InactivityTS %}
+                    title="{{ "Status" | tr }}: {{ "Inactive" | tr }}"
+                    class="user-inactive"
+                {% endif %}
+            >{{ user.Username }}</span>{# Do not add spaces/newlines here! #}
+            {% if account_age < 90 %}<span title="{{ "This user is new, be nice!" | tr }}">🔰</span>{% endif %}
+        {% else %}
+            <a
+                href="/account/{{ user.Username }}"
+                {% if user.Suspended %}
+                    title="{{ "Status" | tr }}: {{ "Suspended" | tr }}"
+                    class="user-suspended"
+                {% elif user.InactivityTS %}
+                    title="{{ "Status" | tr }}: {{ "Inactive" | tr }}"
+                    class="user-inactive"
+                {% else %}
+                    title="{{ "View account information for %s" | tr | format(user.Username) }}"
+                {% endif %}
+            >{{ user.Username }}</a>{# Do not add spaces/newlines here! #}
+            {% if account_age < 90 %}
+                <span title="{{ "This user is new, be nice!" | tr }} ({{ account_age|int }}d)">
+                    🔰 {% if account_age < 14 %}({{ account_age|int }}d){% endif %}
+                </span>{% endif %}
+        {% endif %}
+    {% endif %}
+{% endmacro %}

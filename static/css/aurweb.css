@@ -251,6 +251,21 @@ input#search-action-submit {
     color: green;
 }
 
+/* Importants are needed here because they are used in archweb.css: */
+.user-suspended {
+    color: red !important;
+    text-decoration: line-through !important;
+}
+
+.user-inactive {
+    color: gray !important;
+    text-decoration: line-through !important;
+}
+
+a.user-suspended:hover, a.user-inactive:hover {
+    text-decoration: line-through underline !important;
+}
+
 /* Styling used to clone <a> styles for a form.link button. */
 form.link, form.link button {
     display: inline;
