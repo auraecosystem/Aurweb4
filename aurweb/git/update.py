@@ -466,8 +466,8 @@ def main() -> None:  # noqa: C901
 
         # Check if the author email matches the user email
         if commit.author.email.casefold() != user_email:
-            # Allow if the user has requested force-push with AUR_OVERWRITE
-            if not allow_overwrite:
+            # Allow if the user is privileged with AUR_PRIVILEGED
+            if not privileged:
                 die_commit(
                     "The author email address is invalid",
                     str(commit.id),
