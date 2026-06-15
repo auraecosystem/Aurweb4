@@ -161,14 +161,15 @@ def pkgbase_set_comaintainers(pkgbase, userlist, user, privileged):
     uids_add = uids_new - uids_old
     uids_rem = uids_old - uids_new
 
+    now = int(time.time())
     i = 1
     for userid in uids_new:
         if userid in uids_add:
             cur = conn.execute(
                 "INSERT INTO PackageComaintainers "
-                + "(PackageBaseID, UsersID, Priority) "
-                + "VALUES (?, ?, ?)",
-                [pkgbase_id, userid, i],
+                + "(PackageBaseID, UsersID, Priority, CoMaintainerSinceTS) "
+                + "VALUES (?, ?, ?, ?)",
+                [pkgbase_id, userid, i, now],
             )
             subprocess.Popen(
                 (notify_cmd, "comaintainer-add", str(userid), str(pkgbase_id))

@@ -445,6 +445,8 @@ PackageComaintainers = Table(
         nullable=False,
     ),
     Column("Priority", INTEGER(unsigned=True), nullable=False),
+    # when this co-maintainer was added
+    Column("CoMaintainerSinceTS", BIGINT(unsigned=True)),
     Index("ComaintainersPackageBaseID", "PackageBaseID"),
     Index("ComaintainersUsersID", "UsersID"),
     mysql_engine="InnoDB",

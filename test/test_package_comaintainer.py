@@ -45,6 +45,22 @@ def test_package_comaintainer_creation(user: User, pkgbase: PackageBase):
     assert package_comaintainer.User == user
     assert package_comaintainer.PackageBase == pkgbase
     assert package_comaintainer.Priority == 5
+    # __init__ stamps the grant time when none is supplied.
+    assert package_comaintainer.CoMaintainerSinceTS is not None
+
+
+def test_package_comaintainer_preserves_explicit_since(
+    user: User, pkgbase: PackageBase
+):
+    with db.begin():
+        comaint = db.create(
+            PackageComaintainer,
+            User=user,
+            PackageBase=pkgbase,
+            Priority=5,
+            CoMaintainerSinceTS=1234567890,
+        )
+    assert comaint.CoMaintainerSinceTS == 1234567890
 
 
 def test_package_comaintainer_null_user_raises(pkgbase: PackageBase):

@@ -907,6 +907,34 @@ def test_pkgbase_comaintainers(
     assert users is not None and users.text is None
 
 
+def test_pkgbase_comaintainers_since(
+    client: TestClient, user: User, maintainer: User, package: Package
+):
+    pkgbase = package.PackageBase
+    endpoint = f"/pkgbase/{pkgbase.Name}/comaintainers"
+    cookies = {"AURSID": maintainer.login(Request(), "testPassword")}
+
+    before = time.utcnow()
+    with client as request:
+        request.cookies = cookies
+        resp = request.post(endpoint, data={"users": f"{user.Username}\n"})
+    assert resp.status_code == int(HTTPStatus.SEE_OTHER)
+
+    comaint = pkgbase.comaintainers.first()
+    assert comaint.User == user
+    # Adding a co-maintainer stamps when they gained push access.
+    assert comaint.CoMaintainerSinceTS >= before
+    stamped = comaint.CoMaintainerSinceTS
+
+    # Re-POSTing reorders priority but must not reset the grant time.
+    with client as request:
+        request.cookies = cookies
+        resp = request.post(endpoint, data={"users": f"{user.Username}\n"})
+    assert resp.status_code == int(HTTPStatus.SEE_OTHER)
+    comaint = db.refresh(pkgbase.comaintainers.first())
+    assert comaint.CoMaintainerSinceTS == stamped
+
+
 def test_pkgbase_request_not_found(client: TestClient, user: User):
     pkgbase_name = "fake"
     endpoint = f"/pkgbase/{pkgbase_name}/request"

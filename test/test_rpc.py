@@ -7,6 +7,7 @@ import orjson
 import pytest
 from fastapi.testclient import TestClient
 from redis.client import Pipeline
+from sqlalchemy import func
 
 import aurweb.models.dependency_type as dt
 import aurweb.models.relation_type as rt
@@ -400,6 +401,23 @@ def test_rpc_singular_info(
 
     # Load  request response into Python dictionary.
     response_data = orjson.loads(resp.text)
+
+    # CoMaintainersSince epochs aren't fixed; verify the {Name, Since} pairing
+    # against the DB (latest stamp per name), then drop it before comparison.
+    # Query directly rather than via pkgbase.comaintainers: that relationship
+    # collapses duplicate (user, pkgbase) grants to one ORM object by composite
+    # mapper key, hiding the later stamp the RPC's max() picks up.
+    comaint_since = response_data["results"][0].pop("CoMaintainersSince")
+    expected_since = dict(
+        db.query(PackageComaintainer)
+        .join(User, User.ID == PackageComaintainer.UsersID)
+        .filter(PackageComaintainer.PackageBaseID == pkg.PackageBaseID)
+        .with_entities(User.Username, func.max(PackageComaintainer.CoMaintainerSinceTS))
+        .group_by(User.Username)
+        .all()
+    )
+    assert {c["Name"]: c["Since"] for c in comaint_since} == expected_since
+    assert [c["Name"] for c in comaint_since] == sorted(expected_since)
 
     # Remove the FirstSubmitted LastModified, ID and PackageBaseID keys from
     # reponse, as the key's values aren't guaranteed to match between the two
