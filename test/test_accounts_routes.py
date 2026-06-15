@@ -25,6 +25,7 @@ from aurweb.models.account_type import (
     AccountType,
 )
 from aurweb.models.ban import Ban
+from aurweb.models.package_base import PackageBase
 from aurweb.models.session import Session
 from aurweb.models.ssh_pub_key import SSHPubKey, get_fingerprint
 from aurweb.models.term import Term
@@ -2188,3 +2189,31 @@ def test_account_delete_as_pm(client: TestClient, pm_user: User):
     # Check that our User record no longer exists in the database
     record = db.query(User).filter(User.Username == username).first()
     assert record is None
+
+
+def test_account_delete_clears_maintainer_since(client: TestClient, pm_user: User):
+    with db.begin():
+        user = create_user("maint_user")
+        pkgbase = db.create(
+            PackageBase,
+            Name="some-base",
+            Maintainer=user,
+            Packager=user,
+            MaintainerSinceTS=time.utcnow(),
+        )
+    pkgbase_id = pkgbase.ID
+
+    cookies = {"AURSID": pm_user.login(Request(), "testPassword")}
+    endpoint = f"/account/{user.Username}/delete"
+    with client as request:
+        request.cookies = cookies
+        resp = request.post(
+            endpoint,
+            data={"passwd": "testPassword", "confirm": True},
+        )
+    assert resp.status_code == HTTPStatus.SEE_OTHER
+
+    # The base is orphaned by the FK cascade; its adoption timestamp is cleared.
+    pkgbase = db.query(PackageBase).filter(PackageBase.ID == pkgbase_id).first()
+    assert pkgbase.MaintainerUID is None
+    assert pkgbase.MaintainerSinceTS is None

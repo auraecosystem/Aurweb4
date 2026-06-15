@@ -70,9 +70,9 @@ def save_metadata(metadata, conn, user):  # noqa: C901
         [now, user_id, pkgbase_id],
     )
     conn.execute(
-        "UPDATE PackageBases SET MaintainerUID = ? "
+        "UPDATE PackageBases SET MaintainerUID = ?, MaintainerSinceTS = ? "
         + "WHERE ID = ? AND MaintainerUID IS NULL",
-        [user_id, pkgbase_id],
+        [user_id, now, pkgbase_id],
     )
     for table in ("Sources", "Depends", "Relations", "Licenses", "Groups"):
         conn.execute(

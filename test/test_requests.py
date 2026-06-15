@@ -708,6 +708,7 @@ def test_request_post_orphan_autoaccept(
     auto_orphan_age = config.getint("options", "auto_orphan_age")
     with db.begin():
         pkgbase.OutOfDateTS = now - auto_orphan_age - 100
+        pkgbase.MaintainerSinceTS = now
 
     endpoint = f"/pkgbase/{pkgbase.Name}/request"
     data = {
@@ -722,6 +723,10 @@ def test_request_post_orphan_autoaccept(
     pkgreq = pkgbase.requests.first()
     assert pkgreq is not None
     assert pkgreq.ReqTypeID == ORPHAN_ID
+
+    # Auto-orphaning clears the maintainer and its adoption timestamp.
+    assert pkgbase.Maintainer is None
+    assert pkgbase.MaintainerSinceTS is None
 
     # A Request(Open|Close)Notification should've been sent out.
     assert Email.count() == 2

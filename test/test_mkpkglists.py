@@ -33,6 +33,7 @@ META_KEYS = [
     "OutOfDate",
     "Maintainer",
     "Submitter",
+    "MaintainerSince",
     "FirstSubmitted",
     "LastModified",
     "URLPath",

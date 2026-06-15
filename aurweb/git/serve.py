@@ -88,9 +88,11 @@ def pkgbase_adopt(pkgbase, user, privileged):
     if userid == 0:
         raise aurweb.exceptions.InvalidUserException(user)
 
+    now = int(time.time())
     cur = conn.execute(
-        "UPDATE PackageBases SET MaintainerUID = ? " + "WHERE ID = ?",
-        [userid, pkgbase_id],
+        "UPDATE PackageBases SET MaintainerUID = ?, MaintainerSinceTS = ? "
+        + "WHERE ID = ?",
+        [userid, now, pkgbase_id],
     )
 
     cur = conn.execute(
@@ -277,9 +279,11 @@ def pkgbase_disown(pkgbase, user, privileged):
             comaintainers.remove(new_maintainer)
 
     pkgbase_set_comaintainers(pkgbase, comaintainers, user, privileged)
+    maintainer_since = int(time.time()) if new_maintainer_userid else None
     cur = conn.execute(
-        "UPDATE PackageBases SET MaintainerUID = ? " + "WHERE ID = ?",
-        [new_maintainer_userid, pkgbase_id],
+        "UPDATE PackageBases SET MaintainerUID = ?, MaintainerSinceTS = ? "
+        + "WHERE ID = ?",
+        [new_maintainer_userid, maintainer_since, pkgbase_id],
     )
 
     conn.commit()
