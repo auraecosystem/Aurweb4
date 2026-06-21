@@ -1249,6 +1249,36 @@ def test_post_account_edit_password(client: TestClient, user: User):
     assert user.valid_password("newPassword")
 
 
+def test_post_account_edit_self_comment_notify(client: TestClient, user: User):
+    request = Request()
+    sid = user.login(request, "testPassword")
+    endpoint = "/account/test/edit"
+
+    with client as request:
+        request.cookies = {"AURSID": sid}
+        response = request.get(endpoint)
+
+    assert response.status_code == int(HTTPStatus.OK)
+    assert 'id="id_commentnotifyself"' in response.text
+
+    post_data = {
+        "U": "test",
+        "E": "test@example.org",
+        "SCN": True,
+        "passwd": "testPassword",
+    }
+
+    with client as request:
+        request.cookies = {"AURSID": sid}
+        response = request.post(
+            endpoint,
+            data=post_data,
+        )
+
+    assert response.status_code == int(HTTPStatus.OK)
+    assert user.CommentNotifySelf == 1
+
+
 def test_post_account_edit_self_type_as_user(client: TestClient, user: User):
     cookies = {"AURSID": user.login(Request(), "testPassword")}
     endpoint = f"/account/{user.Username}/edit"

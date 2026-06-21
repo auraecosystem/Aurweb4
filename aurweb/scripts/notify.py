@@ -207,9 +207,12 @@ class CommentNotification(Notification):
             .filter(
                 and_(
                     User.CommentNotify == 1,
-                    PackageNotification.UserID != uid,
                     PackageNotification.PackageBaseID == pkgbase_id,
                     User.Suspended == 0,
+                    or_(
+                        PackageNotification.UserID != uid,
+                        User.CommentNotifySelf == 1,
+                    ),
                 )
             )
             .with_entities(User.Email, User.LangPreference)
