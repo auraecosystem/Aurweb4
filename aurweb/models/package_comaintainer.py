@@ -1,7 +1,7 @@
 from sqlalchemy.exc import IntegrityError
 from sqlalchemy.orm import backref, relationship
 
-from aurweb import schema
+from aurweb import schema, time
 from aurweb.models.declarative import Base
 from aurweb.models.package_base import PackageBase as _PackageBase
 from aurweb.models.user import User as _User
@@ -47,3 +47,6 @@ class PackageComaintainer(Base):
                 orig="PackageComaintainers.Priority",
                 params=("NULL"),
             )
+
+        if not self.CoMaintainerSinceTS:
+            self.CoMaintainerSinceTS = time.utcnow()

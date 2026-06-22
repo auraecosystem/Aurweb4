@@ -46,6 +46,7 @@ class Spec(SpecBase):
                 "LastModified": data.pop("LastModified"),
                 "OutOfDate": data.pop("OutOfDate"),
                 "Maintainer": data.pop("Maintainer"),
+                "MaintainerSince": data.pop("MaintainerSince"),
                 "Keywords": data.pop("Keywords"),
                 "NumVotes": data.pop("NumVotes"),
                 "Popularity": data.pop("Popularity"),

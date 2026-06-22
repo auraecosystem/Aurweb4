@@ -676,6 +676,11 @@ async def account_delete_post(
         )
 
     with db.begin():
+        # The MaintainerUID FK is ondelete=SET NULL, so deleting the user
+        # orphans their bases at the DB level. Clear MaintainerSinceTS too,
+        # otherwise the now-orphaned bases keep a stale adoption timestamp.
+        for pkgbase in user.maintained_bases:
+            pkgbase.MaintainerSinceTS = None
         db.delete(user)
 
     return RedirectResponse("/", status_code=HTTPStatus.SEE_OTHER)

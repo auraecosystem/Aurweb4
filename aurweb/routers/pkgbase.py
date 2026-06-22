@@ -826,6 +826,7 @@ async def pkgbase_request_post(
         # This request should be auto-accepted.
         with db.begin():
             pkgbase.Maintainer = None
+            pkgbase.MaintainerSinceTS = None
             pkgreq.Status = ACCEPTED_ID
         notif = notify.RequestCloseNotification(
             request.user.ID, pkgreq.ID, pkgreq.status_display()

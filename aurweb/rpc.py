@@ -3,7 +3,7 @@ from collections import defaultdict
 from typing import Any, Callable, NewType, Union
 
 from fastapi.responses import HTMLResponse
-from sqlalchemy import and_, literal, orm
+from sqlalchemy import and_, func, literal, orm
 
 import aurweb.config as config
 from aurweb import db, defaults, models, time
@@ -162,6 +162,7 @@ class RPC:
             "NumVotes": package.NumVotes,
             "Popularity": pop,
             "OutOfDate": package.OutOfDateTS,
+            "MaintainerSince": package.MaintainerSinceTS,
             "FirstSubmitted": package.SubmittedTS,
             "LastModified": package.ModifiedTS,
         }
@@ -213,6 +214,7 @@ class RPC:
                 models.PackageBase.Popularity,
                 models.PackageBase.PopularityUpdated,
                 models.PackageBase.OutOfDateTS,
+                models.PackageBase.MaintainerSinceTS,
                 models.PackageBase.SubmittedTS,
                 models.PackageBase.ModifiedTS,
                 models.User.Username.label("Maintainer"),
@@ -330,6 +332,30 @@ class RPC:
                 name += record.Cond
 
             self.extra_info[record.ID][type_].append(name)
+
+        # Separate query (union columns can't carry a timestamp), grouped by
+        # name so duplicate grants collapse to the latest stamp.
+        comaintainers_since = (
+            db.query(models.PackageComaintainer)
+            .join(models.User, models.User.ID == models.PackageComaintainer.UsersID)
+            .join(
+                models.Package,
+                models.Package.PackageBaseID
+                == models.PackageComaintainer.PackageBaseID,
+            )
+            .filter(models.Package.ID.in_(ids))
+            .with_entities(
+                models.Package.ID.label("ID"),
+                models.User.Username.label("Name"),
+                func.max(models.PackageComaintainer.CoMaintainerSinceTS).label("Since"),
+            )
+            .group_by(models.Package.ID, models.User.Username)
+            .order_by("Name")
+        )
+        for record in comaintainers_since:
+            self.extra_info[record.ID]["CoMaintainersSince"].append(
+                {"Name": record.Name, "Since": record.Since}
+            )
 
     def _handle_multiinfo_type(
         self, args: list[str] = [], **kwargs

@@ -183,6 +183,8 @@ PackageBases = Table(
         "SubmitterUID", ForeignKey("Users.ID", ondelete="SET NULL")
     ),  # who submitted it?
     Column("MaintainerUID", ForeignKey("Users.ID", ondelete="SET NULL")),  # User
+    # when the current maintainer took ownership; NULL when orphaned
+    Column("MaintainerSinceTS", BIGINT(unsigned=True)),
     Column("PackagerUID", ForeignKey("Users.ID", ondelete="SET NULL")),  # Last packager
     Index("BasesMaintainerUID", "MaintainerUID"),
     Index("BasesNumVotes", "NumVotes"),
@@ -443,6 +445,8 @@ PackageComaintainers = Table(
         nullable=False,
     ),
     Column("Priority", INTEGER(unsigned=True), nullable=False),
+    # when this co-maintainer was added
+    Column("CoMaintainerSinceTS", BIGINT(unsigned=True)),
     Index("ComaintainersPackageBaseID", "PackageBaseID"),
     Index("ComaintainersUsersID", "UsersID"),
     mysql_engine="InnoDB",

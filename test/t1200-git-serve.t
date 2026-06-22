@@ -309,7 +309,7 @@ test_expect_success "Adopt a package base and add co-maintainers." '
 	5|3|1
 	6|3|2
 	EOF
-	echo "SELECT * FROM PackageComaintainers ORDER BY Priority;" | \
+	echo "SELECT UsersID, PackageBaseID, Priority FROM PackageComaintainers ORDER BY Priority;" | \
 	sqlite3 aur.db >actual &&
 	test_cmp expected actual
 '
@@ -323,7 +323,7 @@ test_expect_success "Update package base co-maintainers." '
 	5|3|2
 	6|3|3
 	EOF
-	echo "SELECT * FROM PackageComaintainers ORDER BY Priority;" | \
+	echo "SELECT UsersID, PackageBaseID, Priority FROM PackageComaintainers ORDER BY Priority;" | \
 	sqlite3 aur.db >actual &&
 	test_cmp expected actual
 '
@@ -338,7 +338,7 @@ test_expect_success "Try to add co-maintainers to an orphan package base." '
 	5|3|2
 	6|3|3
 	EOF
-	echo "SELECT * FROM PackageComaintainers ORDER BY Priority;" | \
+	echo "SELECT UsersID, PackageBaseID, Priority FROM PackageComaintainers ORDER BY Priority;" | \
 	sqlite3 aur.db >actual &&
 	test_cmp expected actual
 '
@@ -356,7 +356,7 @@ test_expect_success "Disown a package base and check (co-)maintainer list." '
 	5|3|1
 	6|3|2
 	EOF
-	echo "SELECT * FROM PackageComaintainers ORDER BY Priority;" | \
+	echo "SELECT UsersID, PackageBaseID, Priority FROM PackageComaintainers ORDER BY Priority;" | \
 	sqlite3 aur.db >actual &&
 	test_cmp expected actual
 '
@@ -371,7 +371,7 @@ test_expect_success "Force-disown a package base and check (co-)maintainer list.
 	test_cmp expected actual &&
 	cat >expected <<-EOF &&
 	EOF
-	echo "SELECT * FROM PackageComaintainers ORDER BY Priority;" | \
+	echo "SELECT UsersID, PackageBaseID, Priority FROM PackageComaintainers ORDER BY Priority;" | \
 	sqlite3 aur.db >actual &&
 	test_cmp expected actual
 '

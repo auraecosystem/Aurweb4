@@ -176,6 +176,7 @@ def as_dict(package: Package) -> dict[str, Any]:
         "OutOfDate": package.OutOfDate,
         "Maintainer": package.Maintainer,
         "Submitter": package.Submitter,
+        "MaintainerSince": package.MaintainerSince,
         "FirstSubmitted": package.FirstSubmitted,
         "LastModified": package.LastModified,
     }
@@ -223,6 +224,7 @@ def _main():
             PackageBase.OutOfDateTS.label("OutOfDate"),
             User.Username.label("Maintainer"),
             Submitter.Username.label("Submitter"),
+            PackageBase.MaintainerSinceTS.label("MaintainerSince"),
             PackageBase.SubmittedTS.label("FirstSubmitted"),
             PackageBase.ModifiedTS.label("LastModified"),
         )

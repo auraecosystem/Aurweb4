@@ -1,6 +1,6 @@
 from fastapi import Request
 
-from aurweb import aur_logging, db, util
+from aurweb import aur_logging, db, time, util
 from aurweb.auth import creds
 from aurweb.models import PackageBase, User
 from aurweb.models.package_comaintainer import PackageComaintainer
@@ -83,10 +83,12 @@ def _retry_disown(request: Request, pkgbase: PackageBase):
             if prio_comaint:
                 # If there is such a comaintainer, promote them to maint.
                 pkgbase.Maintainer = prio_comaint.User
+                pkgbase.MaintainerSinceTS = time.utcnow()
                 notifs.append(pkgbaseutil.remove_comaintainer(prio_comaint))
             else:
                 # Otherwise, just orphan the package completely.
                 pkgbase.Maintainer = None
+                pkgbase.MaintainerSinceTS = None
     elif is_comaint:
         # This disown request is from a Comaintainer
         with db.begin():
@@ -98,6 +100,7 @@ def _retry_disown(request: Request, pkgbase: PackageBase):
         notifs += handle_request(request, ORPHAN_ID, pkgbase)
         with db.begin():
             pkgbase.Maintainer = None
+            pkgbase.MaintainerSinceTS = None
             db.delete_all(pkgbase.comaintainers)
 
     return notifs
@@ -114,6 +117,7 @@ def pkgbase_disown_instance(request: Request, pkgbase: PackageBase) -> None:
 def _retry_adopt(request: Request, pkgbase: PackageBase) -> None:
     with db.begin():
         pkgbase.Maintainer = request.user
+        pkgbase.MaintainerSinceTS = time.utcnow()
 
 
 def pkgbase_adopt_instance(request: Request, pkgbase: PackageBase) -> None:

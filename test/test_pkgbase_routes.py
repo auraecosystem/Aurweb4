@@ -907,6 +907,34 @@ def test_pkgbase_comaintainers(
     assert users is not None and users.text is None
 
 
+def test_pkgbase_comaintainers_since(
+    client: TestClient, user: User, maintainer: User, package: Package
+):
+    pkgbase = package.PackageBase
+    endpoint = f"/pkgbase/{pkgbase.Name}/comaintainers"
+    cookies = {"AURSID": maintainer.login(Request(), "testPassword")}
+
+    before = time.utcnow()
+    with client as request:
+        request.cookies = cookies
+        resp = request.post(endpoint, data={"users": f"{user.Username}\n"})
+    assert resp.status_code == int(HTTPStatus.SEE_OTHER)
+
+    comaint = pkgbase.comaintainers.first()
+    assert comaint.User == user
+    # Adding a co-maintainer stamps when they gained push access.
+    assert comaint.CoMaintainerSinceTS >= before
+    stamped = comaint.CoMaintainerSinceTS
+
+    # Re-POSTing reorders priority but must not reset the grant time.
+    with client as request:
+        request.cookies = cookies
+        resp = request.post(endpoint, data={"users": f"{user.Username}\n"})
+    assert resp.status_code == int(HTTPStatus.SEE_OTHER)
+    comaint = db.refresh(pkgbase.comaintainers.first())
+    assert comaint.CoMaintainerSinceTS == stamped
+
+
 def test_pkgbase_request_not_found(client: TestClient, user: User):
     pkgbase_name = "fake"
     endpoint = f"/pkgbase/{pkgbase_name}/request"
@@ -1261,6 +1289,11 @@ def test_pkgbase_disown_as_sole_maintainer(
         resp = request.post(endpoint, data={"confirm": True})
     assert resp.status_code == int(HTTPStatus.SEE_OTHER)
 
+    # Disowning to orphan clears the maintainer and the adoption timestamp.
+    pkgbase = db.refresh(pkgbase)
+    assert pkgbase.Maintainer is None
+    assert pkgbase.MaintainerSinceTS is None
+
 
 def test_pkgbase_disown_as_maint_with_comaint(
     client: TestClient, user: User, maintainer: User, package: Package
@@ -1274,6 +1307,7 @@ def test_pkgbase_disown_as_maint_with_comaint(
     with db.begin():
         db.create(PackageComaintainer, PackageBase=pkgbase, User=user, Priority=1)
 
+    before = time.utcnow()
     maint_cookies = {"AURSID": maintainer.login(Request(), "testPassword")}
     with client as request:
         request.cookies = maint_cookies
@@ -1285,6 +1319,8 @@ def test_pkgbase_disown_as_maint_with_comaint(
 
     assert pkgbase.Maintainer == user
     assert pkgbase.comaintainers.count() == 0
+    # Promotion to maintainer stamps a fresh ownership time, not a stale one.
+    assert pkgbase.MaintainerSinceTS >= before
 
 
 def test_pkgbase_disown(
@@ -1379,11 +1415,13 @@ def test_pkgbase_adopt(
     endpoint = f"/pkgbase/{pkgbasename}/adopt"
 
     # Adopt the package base.
+    before = time.utcnow()
     with client as request:
         request.cookies = cookies
         resp = request.post(endpoint)
     assert resp.status_code == int(HTTPStatus.SEE_OTHER)
     assert package.PackageBase.Maintainer == maintainer
+    assert package.PackageBase.MaintainerSinceTS >= before
 
     # Try to adopt it when it already has a maintainer; nothing changes.
     user_cookies = {"AURSID": user.login(Request(), "testPassword")}
