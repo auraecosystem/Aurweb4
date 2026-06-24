@@ -7,6 +7,7 @@ import tempfile
 import time
 from collections.abc import Generator
 from contextlib import contextmanager
+from textwrap import dedent
 
 import pygit2
 from alpm.alpm_srcinfo import MergedPackage, SourceInfoError, source_info_from_str
@@ -459,6 +460,22 @@ def main() -> None:  # noqa: C901
                         f"{timeout_seconds} seconds",
                         str(commit.id),
                     )
+        else:
+            # Warn during the grace period; change this to `die` after it ends
+            warn(
+                dedent("""\
+                Your submission is missing license declarations.
+                These will become mandatory on the AUR in the future.
+
+                For more info on why this is important, see:
+
+                    https://rfc.archlinux.page/0040-license-package-sources/
+
+                To learn how to fix the problem, see:
+
+                    https://wiki.archlinux.org/title/Arch_package_guidelines#Package_sources_licenses
+                """)
+            )
 
     # Display a warning if .SRCINFO is unchanged.
     if sha1_old not in ("0000000000000000000000000000000000000000", sha1_new):
