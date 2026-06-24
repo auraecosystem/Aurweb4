@@ -3,7 +3,7 @@ document.addEventListener('DOMContentLoaded', function() {
     elements.forEach(function(el) {
         el.addEventListener('click', function(e) {
             e.preventDefault();
-            navigator.clipboard.writeText(e.target.text);
+            navigator.clipboard.writeText(e.target.href);
         });
     });
 });
