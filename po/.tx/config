@@ -1,0 +1,8 @@
+[main]
+host = https://app.transifex.com
+
+[o:archlinux:p:aurweb-1:r:aurwebpot]
+source_file = aurweb.pot
+file_filter = <lang>.po
+type = PO
+resource_name = Web Application

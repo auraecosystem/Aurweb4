@@ -1,23 +1,20 @@
 # SOME DESCRIPTIVE TITLE.
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the AURWEB package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 # 
 # Translators:
-# Heimen Stoffels <vistausss@fastmail.com>, 2021-2022
-# Heimen Stoffels <vistausss@fastmail.com>, 2015,2021
-# jelly <jelle@vdwaa.nl>, 2011
-# Kevin Morris <kevr@0cost.org>, 2022
-# Sietse <sietse@vdmolen.eu>, 2013
-# Sietse <sietse@vdmolen.eu>, 2013
-# Wijnand Modderman-Lenstra <accounts+transifex@maze.io>, 2015
+# Archlinux DevOps account, 2025
+# 
+#, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: aurweb\n"
+"Project-Id-Version: AURWEB v6.2.17\n"
 "Report-Msgid-Bugs-To: https://gitlab.archlinux.org/archlinux/aurweb/-/issues\n"
-"POT-Creation-Date: 2020-01-31 09:29+0100\n"
-"PO-Revision-Date: 2011-04-10 13:21+0000\n"
-"Last-Translator: Heimen Stoffels <vistausss@fastmail.com>, 2021-2022\n"
-"Language-Team: Dutch (http://app.transifex.com/lfleischer/aurweb/language/nl/)\n"
+"POT-Creation-Date: 2025-06-30 21:27+0100\n"
+"PO-Revision-Date: 2025-07-03 18:30+0000\n"
+"Last-Translator: Archlinux DevOps account, 2025\n"
+"Language-Team: Dutch (https://app.transifex.com/archlinux/teams/289905/nl/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -43,7 +40,7 @@ msgstr "Git clone-url's horen niet te worden geopend in een webbrowser."
 #: html/404.php
 #, php-format
 msgid "To clone the Git repository of %s, run %s."
-msgstr "Wilt u de Git-repo van %s klonen? Voer dan %s uit."
+msgstr "Wil je de Git-repo van %s klonen? Voer dan %s uit."
 
 #: html/404.php
 #, php-format
@@ -57,9 +54,11 @@ msgstr "Dienst is niet beschikbaar"
 #: html/503.php
 msgid ""
 "Don't panic! This site is down due to maintenance. We will be back soon."
-msgstr "Raak niet in paniek: de website is vanwege werkzaamheden uit de lucht. We zijn zo spoedig mogelijk weer terug."
+msgstr ""
+"Raak niet in paniek: de website is vanwege werkzaamheden uit de lucht. We "
+"zijn zo spoedig mogelijk weer terug."
 
-#: html/account.php
+#: html/account.php routers/accounts.py
 msgid "Account"
 msgstr "Account"
 
@@ -69,15 +68,15 @@ msgstr "Accounts"
 
 #: html/account.php html/addvote.php
 msgid "You are not allowed to access this area."
-msgstr "U heeft geen toegang tot deze sectie."
+msgstr "Je hebt geen toegang tot deze sectie."
 
 #: html/account.php
 msgid "Could not retrieve information for the specified user."
 msgstr "Er kan geen informatie worden opgehaald over de opgegeven gebruiker."
 
-#: html/account.php
+#: html/account.php routers/accounts.py
 msgid "You do not have permission to edit this account."
-msgstr "U bent niet bevoegd om dit account te bewerken."
+msgstr "Je bent niet bevoegd om dit account te bewerken."
 
 #: html/account.php lib/acctfuncs.inc.php
 msgid "Invalid password."
@@ -103,8 +102,8 @@ msgstr "Ongeldige toegangssleutel voor gebruikersactie."
 msgid "Username does not exist."
 msgstr "Deze gebruikersnaam bestaat niet."
 
-#: html/addvote.php
-#, php-format
+#: html/addvote.php routers/package_maintainer.py
+#, python-format, php-format
 msgid "%s already has proposal running for them."
 msgstr "%s heeft hier al een voorstel voor ingediend."
 
@@ -114,7 +113,7 @@ msgstr "Ongeldig type."
 
 #: html/addvote.php
 msgid "Proposal cannot be empty."
-msgstr "U mag geen blanco voorstel doen."
+msgstr "Je mag geen blanco voorstel doen."
 
 #: html/addvote.php
 msgid "New proposal submitted."
@@ -139,15 +138,15 @@ msgstr "Type"
 
 #: html/addvote.php
 msgid "Addition of a Package Maintainer"
-msgstr ""
+msgstr "Toevoegen van een pakketbeheerder"
 
 #: html/addvote.php
 msgid "Removal of a Package Maintainer"
-msgstr ""
+msgstr "Verwijderen van een pakketbeheerder"
 
 #: html/addvote.php
 msgid "Removal of a Package Maintainer (undeclared inactivity)"
-msgstr ""
+msgstr "Verwijdering van een pakketbeheerder (onverklaarbare inactiviteit)"
 
 #: html/addvote.php
 msgid "Amendment of Bylaws"
@@ -208,21 +207,27 @@ msgid ""
 "information and the %sAUR Submission Guidelines%s if you want to contribute "
 "a PKGBUILD."
 msgstr ""
+"Welkom op de AUR! Lees de %sAUR-gebruikersrichtlijnen%s en - indien je "
+"pakketten wilt bijdragen - %sde AUR-bijdragerichtlijnen%s door."
 
 #: html/home.php
 #, php-format
 msgid ""
 "Contributed PKGBUILDs %smust%s conform to the %sArch Packaging Standards%s "
 "otherwise they will be deleted!"
-msgstr "Bijgedragen PKGBUILDs %smoeten%s voldoen aan de %sArch-pakketstandaarden%s, anders worden ze verwijderd!"
+msgstr ""
+"Bijgedragen PKGBUILDs %smoeten%s voldoen aan de %sArch-pakketstandaarden%s, "
+"anders worden ze verwijderd!"
 
 #: html/home.php
 msgid "Remember to vote for your favourite packages!"
-msgstr "Vergeet niet te stemmen op uw favoriete pakketten!"
+msgstr "Vergeet niet te stemmen op je favoriete pakketten!"
 
 #: html/home.php
 msgid "Some packages may be provided as binaries in [extra]."
-msgstr "Sommige pakketten in [extra] kunnen worden aangeleverd als uitvoerbare bestanden."
+msgstr ""
+"Sommige pakketten in [extra] kunnen worden aangeleverd als uitvoerbare "
+"bestanden."
 
 #: html/home.php
 msgid "DISCLAIMER"
@@ -232,7 +237,9 @@ msgstr "DISCLAIMER"
 msgid ""
 "AUR packages are user produced content. Any use of the provided files is at "
 "your own risk."
-msgstr "AUR-pakketten zijn volledig samengesteld door gebruikers. Gebruik hiervan is op eigen risico."
+msgstr ""
+"AUR-pakketten zijn volledig samengesteld door gebruikers. Gebruik hiervan is"
+" op eigen risico."
 
 #: html/home.php
 msgid "Learn more..."
@@ -251,7 +258,9 @@ msgstr "Pakketverzoeken"
 msgid ""
 "There are three types of requests that can be filed in the %sPackage "
 "Actions%s box on the package details page:"
-msgstr "Er zijn drie soorten verzoeken die kunnen worden ingediend middels het %sPakketacties%s-veld op de pakketinformatiepagina:"
+msgstr ""
+"Er zijn drie soorten verzoeken die kunnen worden ingediend middels het "
+"%sPakketacties%s-veld op de pakketinformatiepagina:"
 
 #: html/home.php
 msgid "Orphan Request"
@@ -261,7 +270,9 @@ msgstr "Onteigeningsverzoek"
 msgid ""
 "Request a package to be disowned, e.g. when the maintainer is inactive and "
 "the package has been flagged out-of-date for a long time."
-msgstr "Verzoek om het pakket te markeren als onteigend, bijv. als de eigenaar inactief is en het pakket langere tijd als verouderd gemarkeerd is."
+msgstr ""
+"Verzoek om het pakket te markeren als onteigend, bijv. als de eigenaar "
+"inactief is en het pakket langere tijd als verouderd gemarkeerd is."
 
 #: html/home.php
 msgid "Deletion Request"
@@ -273,6 +284,10 @@ msgid ""
 " use this if a package is broken and can be fixed easily. Instead, contact "
 "the maintainer and file orphan request if necessary."
 msgstr ""
+"Verzoek om een pakket uit de Arch User Repository te laten verwijderen. "
+"Gebruik dit niet als een pakket niet naar behoren functioneert en eenvoudig "
+"gerepareerd kan worden. Neem in dat geval contact op met de eigenaar en open"
+" zo nodig een onteigeningsverzoek."
 
 #: html/home.php
 msgid "Merge Request"
@@ -282,14 +297,20 @@ msgstr "Samenvoegverzoek"
 msgid ""
 "Request a package to be merged into another one. Can be used when a package "
 "needs to be renamed or replaced by a split package."
-msgstr "Verzoek om een pakket samen te laten voegen met een ander pakket. Dit kan gebruikt worden als een pakketnaam gewijzigd moet worden of vervangen wordt door een opgesplitst pakket."
+msgstr ""
+"Verzoek om een pakket samen te laten voegen met een ander pakket. Dit kan "
+"gebruikt worden als een pakketnaam gewijzigd moet worden of vervangen wordt "
+"door een opgesplitst pakket."
 
 #: html/home.php
 #, php-format
 msgid ""
 "If you want to discuss a request, you can use the %saur-requests%s mailing "
 "list. However, please do not use that list to file requests."
-msgstr "Als u het verzoek wilt bediscussiëren, dan kunt u hiervoor de %saur-requests%s-mailinglijst gebruiken. Gebruik deze lijst niet om verzoeken in te dienen."
+msgstr ""
+"Als je het verzoek wilt bediscussiëren, dan kun je hiervoor de %saur-"
+"requests%s-mailinglijst gebruiken. Gebruik deze lijst niet om verzoeken in "
+"te dienen."
 
 #: html/home.php
 msgid "Submitting Packages"
@@ -301,7 +322,10 @@ msgid ""
 "Git over SSH is now used to submit packages to the AUR. See the %sSubmitting"
 " packages%s section of the Arch User Repository ArchWiki page for more "
 "details."
-msgstr "U dient git via ssh te gebruiken om pakketten bij te dragen aan de AUR. Bekijk voor meer informatie de pagina %sPakketten bijdragen%s op de Arch User Repository ArchWiki-pagina."
+msgstr ""
+"Je dient git via ssh te gebruiken om pakketten bij te dragen aan de AUR. "
+"Bekijk voor meer informatie de pagina %sPakketten bijdragen%s op de Arch "
+"User Repository ArchWiki-pagina."
 
 #: html/home.php
 msgid "The following SSH fingerprints are used for the AUR:"
@@ -319,6 +343,10 @@ msgid ""
 " to the development of the AUR web interface, use the %saur-dev%s mailing "
 "list."
 msgstr ""
+"Algemene discussies met betrekking tot de Arch User Repository (AUR) en de "
+"opzet van pakketbeheerders vinden plaats op %saur-general%s. Discussies met "
+"betrekking tot de ontwikkeling van de AUR-webapp vinden plaats op de %saur-"
+"dev%s-mailinglijst."
 
 #: html/home.php
 msgid "Bug Reporting"
@@ -332,6 +360,10 @@ msgid ""
 " %sonly%s. To report packaging bugs contact the maintainer or leave a "
 "comment on the appropriate package page."
 msgstr ""
+"Als je een bug tegenkomt in de AUR-webapp, open dan een ticket op onze "
+"%sbugtracker%s. Gebruik de bugtracker %salléén%s om bugs over AUR te melden."
+" Als je fouten tegenkomt in een pakketsamenstelling, meld dit dan aan de "
+"eigenaar of laat een opmerking achter op de bijbehorende pakketpagina."
 
 #: html/home.php
 msgid "Package Search"
@@ -376,7 +408,7 @@ msgstr "Uitloggen"
 
 #: html/login.php
 msgid "Enter login credentials"
-msgstr "Voer uw inloggegevens in"
+msgstr "Voer je inloggegevens in"
 
 #: html/login.php
 msgid "User name or primary email address"
@@ -398,7 +430,8 @@ msgstr "Wachtwoord vergeten"
 #, php-format
 msgid ""
 "HTTP login is disabled. Please %sswitch to HTTPs%s if you want to login."
-msgstr "Inloggen via http is uitgeschakeld. %sSchakel over naar https%s om in te loggen."
+msgstr ""
+"Inloggen via http is uitgeschakeld. %sGebruik https%s om in te loggen."
 
 #: html/packages.php template/pkg_search_form.php
 msgid "Search Criteria"
@@ -421,10 +454,11 @@ msgstr "Er is een verplicht veld leeggelaten."
 msgid "Password fields do not match."
 msgstr "De wachtwoordvelden komen niet overeen."
 
-#: html/passreset.php lib/acctfuncs.inc.php
-#, php-format
+#: html/passreset.php lib/acctfuncs.inc.php routers/accounts.py
+#: users/validate.py
+#, python-format, php-format
 msgid "Your password must be at least %s characters."
-msgstr "Uw wachtwoord dient minimaal %s tekens te bevatten."
+msgstr "Je wachtwoord dient minimaal %s tekens te bevatten."
 
 #: html/passreset.php
 msgid "Invalid e-mail."
@@ -436,23 +470,23 @@ msgstr "Wachtwoordherstel"
 
 #: html/passreset.php
 msgid "Check your e-mail for the confirmation link."
-msgstr "Er is een e-mail met bevestigingslink aan u verstuurd."
+msgstr "Er is een e-mail met bevestigingslink aan je verstuurd."
 
 #: html/passreset.php
 msgid "Your password has been reset successfully."
-msgstr "Uw wachtwoord is hersteld."
+msgstr "Je wachtwoord is hersteld."
 
 #: html/passreset.php
 msgid "Confirm your user name or primary e-mail address:"
-msgstr "Bevestig uw gebruikersnaam of e-mailadres:"
+msgstr "Bevestig je gebruikersnaam of e-mailadres:"
 
 #: html/passreset.php
 msgid "Enter your new password:"
-msgstr "Voer uw nieuwe wachtwoord in:"
+msgstr "Voer je nieuwe wachtwoord in:"
 
 #: html/passreset.php
 msgid "Confirm your new password:"
-msgstr "Bevestig uw nieuwe wachtwoord:"
+msgstr "Bevestig je nieuwe wachtwoord:"
 
 #: html/passreset.php html/tos.php
 msgid "Continue"
@@ -463,11 +497,13 @@ msgstr "Doorgaan"
 msgid ""
 "If you have forgotten the user name and the primary e-mail address you used "
 "to register, please send a message to the %saur-general%s mailing list."
-msgstr "Als u uw gebruikersnaam en e-mailadres vergeten bent, stuur dan een bericht aan de %saur-general%s-mailinglijst."
+msgstr ""
+"Als je je gebruikersnaam en e-mailadres vergeten bent, stuur dan een bericht"
+" aan de %saur-general%s-mailinglijst."
 
 #: html/passreset.php
 msgid "Enter your user name or your primary e-mail address:"
-msgstr "Voer uw gebruikersnaam of e-mailadres in:"
+msgstr "Voer je gebruikersnaam of e-mailadres in:"
 
 #: html/pkgbase.php
 msgid "Package Bases"
@@ -477,17 +513,22 @@ msgstr "Basispakketten"
 msgid ""
 "The selected packages have not been disowned, check the confirmation "
 "checkbox."
-msgstr "De geselecteerde pakketten zijn niet onteigend. Kruis het bevestigingsvakje aan."
+msgstr ""
+"De geselecteerde pakketten zijn niet onteigend. Kruis het bevestigingsvakje "
+"aan."
 
 #: aurweb/routers/packages.py
 msgid ""
 "The selected packages have not been adopted, check the confirmation "
 "checkbox."
-msgstr "De geselecteerde pakketten zijn niet overgedragen. Kruis het bevestigingsvakje aan."
+msgstr ""
+"De geselecteerde pakketten zijn niet overgedragen. Kruis het "
+"bevestigingsvakje aan."
 
 #: html/pkgbase.php lib/pkgreqfuncs.inc.php
 msgid "Cannot find package to merge votes and comments into."
-msgstr "Er is geen pakket gevonden om stemmen en opmerkingen mee samen te voegen."
+msgstr ""
+"Er is geen pakket gevonden om stemmen en opmerkingen mee samen te voegen."
 
 #: html/pkgbase.php lib/pkgreqfuncs.inc.php
 msgid "Cannot merge a package base with itself."
@@ -497,7 +538,9 @@ msgstr "Het basispakket kan niet met zichzelf worden samengevoegd."
 msgid ""
 "The selected packages have not been deleted, check the confirmation "
 "checkbox."
-msgstr "De geselecteerde pakketten zijn niet gewist. Kruis het bevestigingsvakje aan."
+msgstr ""
+"De geselecteerde pakketten zijn niet gewist. Kruis het bevestigingsvakje "
+"aan."
 
 #: html/pkgdel.php
 msgid "Package Deletion"
@@ -512,11 +555,13 @@ msgstr "Pakket verwijderen"
 msgid ""
 "Use this form to delete the package base %s%s%s and the following packages "
 "from the AUR: "
-msgstr "Gebruik dit formulier om het basispakket ‘%s%s%s’, te verwijderen van AUR, evenals de volgende pakketten:"
+msgstr ""
+"Gebruik dit formulier om het basispakket ‘%s%s%s’, te verwijderen van AUR, "
+"evenals de volgende pakketten:"
 
 #: html/pkgdel.php
 msgid "Deletion of a package is permanent. "
-msgstr "De verwijdering is permanent."
+msgstr "De verwijdering is onomkeerbaar."
 
 #: html/pkgdel.php html/pkgmerge.php
 msgid "Select the checkbox to confirm action."
@@ -533,6 +578,7 @@ msgstr "Verwijderen"
 #: html/pkgdel.php
 msgid "Only Package Maintainers and Developers can delete packages."
 msgstr ""
+"Alleen pakketbeheerders en ontwikkelaars kunnen pakketten verwijderen."
 
 #: html/pkgdisown.php template/pkgbase_actions.php
 msgid "Disown Package"
@@ -543,25 +589,33 @@ msgstr "Pakket onteigenen"
 msgid ""
 "Use this form to disown the package base %s%s%s which includes the following"
 " packages: "
-msgstr "Gebruik dit formulier om het basispakket ‘%s%s%s’, te onteigenen, evenals de volgende pakketten:"
+msgstr ""
+"Gebruik dit formulier om het basispakket ‘%s%s%s’, te onteigenen, evenals de"
+" volgende pakketten:"
 
 #: html/pkgdisown.php
 msgid ""
 "By selecting the checkbox, you confirm that you want to no longer be a "
 "package co-maintainer."
-msgstr "Door het bevestigingsvakje aan te kruisen, stemt u in met het feit dat u geen mede-onderhouder meer bent."
+msgstr ""
+"Door het bevestigingsvakje aan te kruisen, stemt u in met het feit dat u "
+"geen mede-onderhouder meer bent."
 
 #: html/pkgdisown.php
 #, php-format
 msgid ""
 "By selecting the checkbox, you confirm that you want to disown the package "
 "and transfer ownership to %s%s%s."
-msgstr "Door het bevestigingsvakje aan te kruisen, bevestigt u dat u het pakket wilt onteigenen en het wilt overdragen aan %s%s%s."
+msgstr ""
+"Door het bevestigingsvakje aan te kruisen, bevestigt u dat u het pakket wilt"
+" onteigenen en het wilt overdragen aan %s%s%s."
 
 #: html/pkgdisown.php
 msgid ""
 "By selecting the checkbox, you confirm that you want to disown the package."
-msgstr "Door het bevestigingsvakje aan te kruisen, stemt u in met het onteigenen van het pakket."
+msgstr ""
+"Door het bevestigingsvakje aan te kruisen, stem je in met het onteigenen van"
+" het pakket."
 
 #: html/pkgdisown.php
 msgid "Confirm to disown the package"
@@ -573,7 +627,7 @@ msgstr "Onteigenen"
 
 #: html/pkgdisown.php
 msgid "Only Package Maintainers and Developers can disown packages."
-msgstr ""
+msgstr "Alleen pakketbeheerders en ontwikkelaars kunnen pakketten onteigenen."
 
 #: html/pkgflagcomment.php
 msgid "Flag Comment"
@@ -589,27 +643,38 @@ msgid ""
 " package version in the AUR does not match the most recent commit. Flagging "
 "this package should only be done if the sources moved or changes in the "
 "PKGBUILD are required because of recent upstream changes."
-msgstr "Dit lijkt een VCS-pakket te zijn. Markeer dit pakket %sniet%s als verouderd als de pakketversie op AUR niet overeenkomt met de recentste commit. Markeer het alleen als de broncodelocatie gewijzigd is of de PKGBUILD moet worden aangepast."
+msgstr ""
+"Dit lijkt een vcs-pakket te zijn. Markeer dit pakket %sniet%s als verouderd "
+"als de pakketversie op AUR niet overeenkomt met de recentste commit. Markeer"
+" het alléén als de broncodelocatie gewijzigd is of de PKGBUILD moet worden "
+"aangepast."
 
 #: html/pkgflag.php
 #, php-format
 msgid ""
 "Use this form to flag the package base %s%s%s and the following packages "
 "out-of-date: "
-msgstr "Gebruik dit formulier om het basispakket ‘%s%s%s’ te markeren als verouderd, evenals de volgende pakketten:"
+msgstr ""
+"Gebruik dit formulier om het basispakket ‘%s%s%s’ te markeren als verouderd,"
+" evenals de volgende pakketten:"
 
 #: html/pkgflag.php
 #, php-format
 msgid ""
 "Please do %snot%s use this form to report bugs. Use the package comments "
 "instead."
-msgstr "Gebruik dit formulier %sniet%s om bugs te melden. Bugs kunt u melden in de opmerkingen."
+msgstr ""
+"Gebruik dit formulier %sniet%s om bugs te melden. Bugs kun je melden in de "
+"opmerkingen."
 
 #: html/pkgflag.php
 msgid ""
 "Enter details on why the package is out-of-date below, preferably including "
 "links to the release announcement or the new release tarball."
-msgstr "Vertel hieronder duidelijk waarom het pakket verouderd is, bij voorkeur met een link naar de aankondiging van de nieuwe versie of een link naar de tarball."
+msgstr ""
+"Vertel hieronder duidelijk waarom het pakket verouderd is, bij voorkeur met "
+"een link naar de aankondiging van de nieuwe versie of een link naar de "
+"tarball."
 
 #: html/pkgflag.php template/pkgreq_close_form.php template/pkgreq_form.php
 #: template/pkgreq_results.php
@@ -622,7 +687,8 @@ msgstr "Markeren"
 
 #: html/pkgflag.php
 msgid "Only registered users can flag packages out-of-date."
-msgstr "Alleen geregistreerde gebruikers kunnen pakketten markeren als verouderd."
+msgstr ""
+"Alleen geregistreerde gebruikers kunnen pakketten markeren als verouderd."
 
 #: html/pkgmerge.php
 msgid "Package Merging"
@@ -635,7 +701,9 @@ msgstr "Pakket samenvoegen"
 #: html/pkgmerge.php
 #, php-format
 msgid "Use this form to merge the package base %s%s%s into another package. "
-msgstr "Gebruik dit formulier om het basispakket ‘%s%s%s’ samen te voegen met een ander pakket."
+msgstr ""
+"Gebruik dit formulier om het basispakket ‘%s%s%s’ samen te voegen met een "
+"ander pakket."
 
 #: html/pkgmerge.php
 msgid "The following packages will be deleted: "
@@ -643,11 +711,12 @@ msgstr "De volgende pakketten worden verwijderd:"
 
 #: html/pkgmerge.php
 msgid "Once the package has been merged it cannot be reversed. "
-msgstr "Als dit pakket is samengevoegd, dan kan het proces niet worden teruggedraaid."
+msgstr "Het samenvoegen van pakketten is naderhand niet terug te draaien."
 
 #: html/pkgmerge.php
 msgid "Enter the package name you wish to merge the package into. "
-msgstr "Geef de naam op van het pakket waarmee dit pakket moet worden samengevoegd."
+msgstr ""
+"Geef de naam op van het pakket waarmee dit pakket moet worden samengevoegd."
 
 #: html/pkgmerge.php
 msgid "Merge into:"
@@ -664,6 +733,7 @@ msgstr "Samenvoegen"
 #: html/pkgmerge.php
 msgid "Only Package Maintainers and Developers can merge packages."
 msgstr ""
+"Alleen pakketbeheerders en ontwikkelaars kunnen pakketten samenvoegen."
 
 #: html/pkgreq.php template/pkgbase_actions.php template/pkgreq_form.php
 msgid "Submit Request"
@@ -701,7 +771,7 @@ msgstr "Registreren"
 msgid "Use this form to create an account."
 msgstr "Gebruik dit formulier om een ​​account aan te maken."
 
-#: html/tos.php
+#: html/tos.php routers/accounts.py
 msgid "Terms of Service"
 msgstr "Algemene voorwaarden"
 
@@ -721,7 +791,7 @@ msgstr "Ik ga akkoord met de algemene voorwaarden."
 
 #: html/tu.php template/account_details.php template/header.php
 msgid "Package Maintainer"
-msgstr ""
+msgstr "Pakketbeheerder"
 
 #: html/tu.php
 msgid "Could not retrieve proposal details."
@@ -729,19 +799,19 @@ msgstr "Het voorstel kan niet worden geladen."
 
 #: html/tu.php
 msgid "Voting is closed for this proposal."
-msgstr "U kunt niet meer stemmen op dit voorstel."
+msgstr "Je kunt niet meer stemmen op dit voorstel."
 
 #: html/tu.php
 msgid "Only Package Maintainers are allowed to vote."
-msgstr ""
+msgstr "Alleen pakketbeheerders zijn bevoegd om te stemmen."
 
 #: html/tu.php
 msgid "You cannot vote in an proposal about you."
-msgstr "U kunt niet stemmen op een voorstel over u."
+msgstr "Je kunt niet stemmen op een voorstel over jezelf."
 
 #: html/tu.php
 msgid "You've already voted for this proposal."
-msgstr "U heeft al gestemd op dit voorstel."
+msgstr "Je hebt al gestemd op dit voorstel."
 
 #: html/tu.php
 msgid "Vote ID not valid."
@@ -763,7 +833,9 @@ msgstr "Stemmers"
 msgid ""
 "Account registration has been disabled for your IP address, probably due to "
 "sustained spam attacks. Sorry for the inconvenience."
-msgstr "Registratie is uitgeschakeld op uw IP-adres, waarschijnlijk vanwege langdurige spamaanvallen. Excuses voor het ongemak."
+msgstr ""
+"Registratie is uitgeschakeld op uw IP-adres, waarschijnlijk vanwege "
+"langdurige spamaanvallen. Excuses voor het ongemak."
 
 #: lib/acctfuncs.inc.php
 msgid "Missing User ID"
@@ -773,8 +845,8 @@ msgstr "Gebruikers-ID ontbreekt"
 msgid "The username is invalid."
 msgstr "De gebruikersnaam is ongeldig."
 
-#: lib/acctfuncs.inc.php
-#, php-format
+#: lib/acctfuncs.inc.php users/validate.py
+#, python-format, php-format
 msgid "It must be between %s and %s characters long"
 msgstr "Het moet tussen de %s en %s tekens bevatten"
 
@@ -788,7 +860,7 @@ msgstr "Mag maar één punt, komma of koppelteken bevatten."
 
 #: lib/acctfuncs.inc.php
 msgid "Please confirm your new password."
-msgstr "Bevestig uw nieuwe wachtwoord."
+msgstr "Bevestig je nieuwe wachtwoord."
 
 #: lib/acctfuncs.inc.php
 msgid "The email address is invalid."
@@ -800,7 +872,7 @@ msgstr "Het tweede e-mailadres is ongeldig."
 
 #: lib/acctfuncs.inc.php
 msgid "The home page is invalid, please specify the full HTTP(s) URL."
-msgstr "Het website-adres is ongeldig. Geef een volledige http(s)-url op."
+msgstr "Het websiteadres is ongeldig. Geef een volledige http(s)-url op."
 
 #: lib/acctfuncs.inc.php
 msgid "The PGP key fingerprint is invalid."
@@ -822,24 +894,24 @@ msgstr "Deze taal wordt momenteel niet ondersteund."
 msgid "Timezone is not currently supported."
 msgstr "Deze tijdzone wordt momenteel niet ondersteund."
 
-#: lib/acctfuncs.inc.php
-#, php-format
+#: lib/acctfuncs.inc.php users/validate.py
+#, python-format, php-format
 msgid "The username, %s%s%s, is already in use."
 msgstr "De gebruikersnaam, %s%s%s, is al in gebruik."
 
-#: lib/acctfuncs.inc.php
-#, php-format
+#: lib/acctfuncs.inc.php users/validate.py
+#, python-format, php-format
 msgid "The address, %s%s%s, is already in use."
 msgstr "Het adres, %s%s%s, is al in gebruik."
 
-#: lib/acctfuncs.inc.php
-#, php-format
+#: lib/acctfuncs.inc.php users/validate.py
+#, python-format, php-format
 msgid "The SSH public key, %s%s%s, is already in use."
 msgstr "De publieke ssh-sleutel, %s%s%s, is al in gebruik."
 
 #: lib/acctfuncs.inc.php
 msgid "The CAPTCHA is missing."
-msgstr "U heeft de captcha niet ingevuld."
+msgstr "Je hebt de captcha niet ingevuld."
 
 #: lib/acctfuncs.inc.php
 msgid "This CAPTCHA has expired. Please try again."
@@ -852,7 +924,8 @@ msgstr "Het opgegeven captcha-antwoord is ongeldig."
 #: lib/acctfuncs.inc.php
 #, php-format
 msgid "Error trying to create account, %s%s%s."
-msgstr "Er is een fout opgetreden tijdens het aanmaken van het account ‘%s%s%s’."
+msgstr ""
+"Er is een fout opgetreden tijdens het aanmaken van het account ‘%s%s%s’."
 
 #: lib/acctfuncs.inc.php
 #, php-format
@@ -861,11 +934,11 @@ msgstr "Het account, %s%s%s, is aangemaakt."
 
 #: lib/acctfuncs.inc.php
 msgid "A password reset key has been sent to your e-mail address."
-msgstr "Er is een wachtwoordherstelsleutel verstuurd naar uw e-mailadres."
+msgstr "Er is een wachtwoordherstelsleutel verstuurd naar je e-mailadres."
 
 #: lib/acctfuncs.inc.php
 msgid "Click on the Login link above to use your account."
-msgstr "Klik op bovenstaande inloglink om uw account in gebruik te nemen."
+msgstr "Klik op bovenstaande inloglink om je account in gebruik te nemen."
 
 #: lib/acctfuncs.inc.php
 #, php-format
@@ -877,19 +950,21 @@ msgstr "Er zijn geen aanpassingen gedaan aan het account ‘%s%s%s’."
 msgid "The account, %s%s%s, has been successfully modified."
 msgstr "Het account, %s%s%s, is aangepast."
 
-#: lib/acctfuncs.inc.php
+#: lib/acctfuncs.inc.php routers/sso.py
 msgid ""
 "The login form is currently disabled for your IP address, probably due to "
 "sustained spam attacks. Sorry for the inconvenience."
-msgstr "Het inlogformulier is uitgeschakeld op uw IP-adres, waarschijnlijk vanwege langdurige spamaanvallen. Excuses voor het ongemak."
+msgstr ""
+"Het inlogformulier is uitgeschakeld op uw IP-adres, waarschijnlijk vanwege "
+"langdurige spamaanvallen. Excuses voor het ongemak."
 
-#: lib/acctfuncs.inc.php
+#: lib/acctfuncs.inc.php routers/sso.py
 msgid "Account suspended"
 msgstr "Account is geschorst"
 
 #: aurweb/routers/accounts.py
 msgid "You do not have permission to suspend accounts."
-msgstr "U bent niet bevoegd om accounts te schorsen."
+msgstr "Je bent niet bevoegd om accounts te schorsen."
 
 #: lib/acctfuncs.inc.php
 #, php-format
@@ -897,7 +972,11 @@ msgid ""
 "Your password has been reset. If you just created a new account, please use "
 "the link from the confirmation email to set an initial password. Otherwise, "
 "please request a reset key on the %sPassword Reset%s page."
-msgstr "Uw wachtwoord is hersteld. Als u net een nieuw account heeft aangemaakt, gebruik dan de link uit de bevestigingsmail om een wachtwoord te genereren. Als dat niet zo is, vraag dan een herstelsleutel aan op de %swachtwoordherstel%spagina."
+msgstr ""
+"Je wachtwoord is hersteld. Als je net een nieuw account hebt aangemaakt, "
+"gebruik dan de link uit de bevestigingsmail om een wachtwoord te genereren. "
+"Als dat niet zo is, vraag dan een herstelsleutel aan op de "
+"%swachtwoordherstel%spagina."
 
 #: lib/acctfuncs.inc.php
 msgid "Bad username or password."
@@ -905,11 +984,12 @@ msgstr "Onjuiste gebruikersnaam of wachtwoord"
 
 #: lib/acctfuncs.inc.php
 msgid "An error occurred trying to generate a user session."
-msgstr "Er is een fout opgetreden tijdens het aanmaken van een gebruikerssessie."
+msgstr ""
+"Er is een fout opgetreden tijdens het aanmaken van een gebruikerssessie."
 
 #: lib/acctfuncs.inc.php
 msgid "Invalid e-mail and reset key combination."
-msgstr "Ongeldige e-mailadres- en herstelsleutel-combinatie."
+msgstr "Ongeldige e-mailadres- en herstelsleutelcombinatie."
 
 #: lib/aur.inc.php template/pkg_details.php
 msgid "None"
@@ -926,7 +1006,7 @@ msgstr "De basispakket-id of -naam ontbreekt."
 
 #: lib/aurjson.class.php lib/pkgbasefuncs.inc.php
 msgid "You are not allowed to edit this comment."
-msgstr "U bent niet bevoegd om deze opmerking te bewerken."
+msgstr "Je bent niet bevoegd om deze opmerking te bewerken."
 
 #: lib/aurjson.class.php
 msgid "Comment does not exist."
@@ -934,7 +1014,7 @@ msgstr "Deze opmerking bestaat niet."
 
 #: lib/pkgbasefuncs.inc.php
 msgid "Comment cannot be empty."
-msgstr "U mag geen blanco opmerking achterlaten."
+msgstr "Je mag geen blanco opmerking achterlaten."
 
 #: lib/pkgbasefuncs.inc.php
 msgid "Comment has been added."
@@ -952,13 +1032,13 @@ msgstr "Ontbrekende opmerkings-ID."
 msgid "No more than 5 comments can be pinned."
 msgstr "Er kunnen max. 5 opmerkingen worden vastgezet."
 
-#: lib/pkgbasefuncs.inc.php
+#: lib/pkgbasefuncs.inc.php routers/pkgbase.py
 msgid "You are not allowed to pin this comment."
-msgstr "U bent niet bevoegd om deze opmerking vast te maken."
+msgstr "Je bent niet bevoegd om deze opmerking vast te maken."
 
-#: lib/pkgbasefuncs.inc.php
+#: lib/pkgbasefuncs.inc.php routers/pkgbase.py
 msgid "You are not allowed to unpin this comment."
-msgstr "U bent niet bevoegd om deze opmerking los te maken."
+msgstr "Je bent niet bevoegd om deze opmerking los te maken."
 
 #: lib/pkgbasefuncs.inc.php
 msgid "Comment has been pinned."
@@ -976,13 +1056,13 @@ msgstr "De pakketinformatie kan niet worden geladen."
 msgid "Package details could not be found."
 msgstr "Er is geen pakketinformatie gevonden."
 
-#: aurweb/routers/auth.py
+#: aurweb/routers/auth.py auth/__init__.py routers/auth.py
 msgid "Bad Referer header."
 msgstr "Onjuiste doorverwijskop."
 
 #: aurweb/routers/packages.py
 msgid "You did not select any packages to be notified about."
-msgstr "U heeft geen pakketten geselecteerd om meldingen over te ontvangen."
+msgstr "Je hebt geen pakketten geselecteerd om meldingen over te ontvangen."
 
 #: aurweb/routers/packages.py
 msgid "The selected packages' notifications have been enabled."
@@ -990,11 +1070,13 @@ msgstr "Meldingen omtrent de geselecteerde pakketten zijn ingeschakeld."
 
 #: aurweb/routers/packages.py
 msgid "You did not select any packages for notification removal."
-msgstr "U heeft geen pakketten geselecteerd om meldingen van uit te schakelen."
+msgstr ""
+"Je hebt geen pakketten geselecteerd om meldingen van uit te schakelen."
 
 #: aurweb/routers/packages.py
 msgid "A package you selected does not have notifications enabled."
-msgstr "Bij één van de geselecteerde pakketten zijn meldingen niet ingeschakeld."
+msgstr ""
+"Bij een van de geselecteerde pakketten zijn meldingen niet ingeschakeld."
 
 #: aurweb/routers/packages.py
 msgid "The selected packages' notifications have been removed."
@@ -1006,11 +1088,13 @@ msgstr "Log in om pakketten te markeren."
 
 #: lib/pkgbasefuncs.inc.php
 msgid "You did not select any packages to flag."
-msgstr "U heeft geen te markeren pakketten geselecteerd."
+msgstr "Je hebt geen te markeren pakketten geselecteerd."
 
 #: lib/pkgbasefuncs.inc.php
 msgid "The selected packages have not been flagged, please enter a comment."
-msgstr "De geselecteerde pakketten zijn nog niet gemarkeerd. Laat een opmerking achter."
+msgstr ""
+"De geselecteerde pakketten zijn nog niet gemarkeerd. Laat een opmerking "
+"achter."
 
 #: lib/pkgbasefuncs.inc.php
 msgid "The selected packages have been flagged out-of-date."
@@ -1022,7 +1106,7 @@ msgstr "Log in om pakketten te demarkeren."
 
 #: lib/pkgbasefuncs.inc.php
 msgid "You did not select any packages to unflag."
-msgstr "U heeft geen te demarkeren pakketten geselecteerd."
+msgstr "Je hebt geen te demarkeren pakketten geselecteerd."
 
 #: lib/pkgbasefuncs.inc.php
 msgid "The selected packages have been unflagged."
@@ -1030,15 +1114,15 @@ msgstr "De geselecteerde pakketten zijn gedemarkeerd."
 
 #: lib/pkgbasefuncs.inc.php
 msgid "You do not have permission to delete packages."
-msgstr "U bent niet bevoegd om pakketten te verwijderen."
+msgstr "Je bent niet bevoegd om pakketten te verwijderen."
 
 #: lib/pkgbasefuncs.inc.php
 msgid "You did not select any packages to delete."
-msgstr "U hebt geen te verwijderen pakketten geselecteerd."
+msgstr "Je hebt geen te verwijderen pakketten geselecteerd."
 
 #: aurweb/routers/packages.py
 msgid "One of the packages you selected does not exist."
-msgstr "Eén van de geselecteerde pakketten bestaat niet."
+msgstr "Een van de geselecteerde pakketten bestaat niet."
 
 #: lib/pkgbasefuncs.inc.php
 msgid "The selected packages have been deleted."
@@ -1050,7 +1134,8 @@ msgstr "Log in om eigenaar van pakketten te kunnen worden."
 
 #: aurweb/routers/package.py
 msgid "You are not allowed to adopt one of the packages you selected."
-msgstr "U bent niet bevoegd om één van de geselecteerde pakketten over te nemen."
+msgstr ""
+"Je bent niet bevoegd om een van de geselecteerde pakketten over te nemen."
 
 #: lib/pkgbasefuncs.inc.php
 msgid "You must be logged in before you can disown packages."
@@ -1058,15 +1143,16 @@ msgstr "Log in om pakketten te onteigenen."
 
 #: aurweb/routers/packages.py
 msgid "You are not allowed to disown one of the packages you selected."
-msgstr "U bent niet bevoegd om één van de geselecteerde pakketten te onteigenen."
+msgstr ""
+"Je bent niet bevoegd om een van de geselecteerde pakketten te onteigenen."
 
 #: lib/pkgbasefuncs.inc.php
 msgid "You did not select any packages to adopt."
-msgstr "U heeft geen over te nemen pakketten geselecteerd."
+msgstr "Je hebt geen over te nemen pakketten geselecteerd."
 
 #: lib/pkgbasefuncs.inc.php
 msgid "You did not select any packages to disown."
-msgstr "U heeft geen te onteigenen pakketten geselecteerd."
+msgstr "Je hebt geen te onteigenen pakketten geselecteerd."
 
 #: lib/pkgbasefuncs.inc.php
 msgid "The selected packages have been adopted."
@@ -1110,7 +1196,7 @@ msgstr "U bent toegevoegd aan de meldingslijst met opmerkingen bij %s."
 msgid "You have been removed from the comment notification list for %s."
 msgstr "U bent toegevoegd van de meldingslijst met opmerkingen bij %s."
 
-#: lib/pkgbasefuncs.inc.php
+#: lib/pkgbasefuncs.inc.php routers/pkgbase.py
 msgid "You are not allowed to undelete this comment."
 msgstr "U bent niet bevoegd om deze opmerking terug te plaatsen."
 
@@ -1118,7 +1204,7 @@ msgstr "U bent niet bevoegd om deze opmerking terug te plaatsen."
 msgid "Comment has been undeleted."
 msgstr "De opmerking is teruggeplaatst."
 
-#: lib/pkgbasefuncs.inc.php
+#: lib/pkgbasefuncs.inc.php routers/pkgbase.py
 msgid "You are not allowed to delete this comment."
 msgstr "U bent niet bevoegd om deze opmerking te verwijderen."
 
@@ -1132,7 +1218,8 @@ msgstr "De opmerking is bewerkt."
 
 #: lib/pkgbasefuncs.inc.php
 msgid "You are not allowed to edit the keywords of this package base."
-msgstr "U bent niet bevoegd om de trefwoorden van dit basispakket aan te passen."
+msgstr ""
+"U bent niet bevoegd om de trefwoorden van dit basispakket aan te passen."
 
 #: lib/pkgbasefuncs.inc.php
 msgid "The package base keywords have been updated."
@@ -1140,10 +1227,12 @@ msgstr "De trefwoorden van dit basispakket zijn bijgewerkt."
 
 #: lib/pkgbasefuncs.inc.php
 msgid "You are not allowed to manage co-maintainers of this package base."
-msgstr "U bent niet bevoegd om de mede-onderhouders van dit basispakket aan te passen."
+msgstr ""
+"U bent niet bevoegd om de mede-onderhouders van dit basispakket aan te "
+"passen."
 
-#: lib/pkgbasefuncs.inc.php
-#, php-format
+#: lib/pkgbasefuncs.inc.php pkgbase/util.py
+#, python-format, php-format
 msgid "Invalid user name: %s"
 msgstr "Ongeldige gebruikersnaam: %s"
 
@@ -1195,7 +1284,8 @@ msgstr "Het verzoek is gesloten."
 #: template/account_delete.php
 #, php-format
 msgid "You can use this form to permanently delete the AUR account %s."
-msgstr "Gebruik dit formulier om het AUR-account ‘%s’ permanent te verwijderen."
+msgstr ""
+"Gebruik dit formulier om het AUR-account ‘%s’ permanent te verwijderen."
 
 #: template/account_delete.php
 #, php-format
@@ -1229,7 +1319,7 @@ msgstr "Ontwikkelaar"
 #: template/account_details.php template/account_edit_form.php
 #: template/search_accounts_form.php
 msgid "Package Maintainer & Developer"
-msgstr ""
+msgstr "Pakketbeheerder en ontwikkelaar"
 
 #: template/account_details.php template/account_edit_form.php
 #: template/search_accounts_form.php
@@ -1315,7 +1405,9 @@ msgstr "Klik %shier%s om de gebruikersgegevens te bekijken."
 #: template/account_edit_form.php
 #, php-format
 msgid "Click %shere%s to list the comments made by this account."
-msgstr "Klik %shier%s om de opmerkingen te bekijken die geplaatst zijn door dit account."
+msgstr ""
+"Klik %shier%s om de opmerkingen te bekijken die geplaatst zijn door dit "
+"account."
 
 #: template/account_edit_form.php
 msgid "required"
@@ -1325,7 +1417,9 @@ msgstr "verplicht"
 msgid ""
 "Your user name is the name you will use to login. It is visible to the "
 "general public, even if your account is inactive."
-msgstr "Uw gebruikersnaam gebruikt u om in te loggen. Deze naam is openbaar, zelfs als uw account inactief is."
+msgstr ""
+"Je gebruikersnaam gebruik je om in te loggen. Deze naam is openbaar, zelfs "
+"als je account inactief is."
 
 #: template/account_edit_form.php template/search_accounts_form.php
 msgid "Normal user"
@@ -1343,7 +1437,9 @@ msgstr "Inactief"
 msgid ""
 "Please ensure you correctly entered your email address, otherwise you will "
 "be locked out."
-msgstr "Zorg er voor dat u het e-mailadres goed hebt ingevoerd, anders wordt u buitengesloten."
+msgstr ""
+"Zorg ervoor dat je het e-mailadres goed hebt ingevoerd, anders wordt je "
+"buitengesloten."
 
 #: template/account_edit_form.php
 msgid "Hide Email Address"
@@ -1354,7 +1450,10 @@ msgid ""
 "If you do not hide your email address, it is visible to all registered AUR "
 "users. If you hide your email address, it is visible to members of the Arch "
 "Linux staff only."
-msgstr "Als u uw e-mailadres níet verbergt, dan is het zichtbaar voor alle geregistreerde AUR-gebruikers. Als u uw e-mailadres wél verbergt, dan is het alleen zichtbaar voor Arch Linux-medewerkers."
+msgstr ""
+"Als je je e-mailadres níet verbergt, dan is het zichtbaar voor alle "
+"geregistreerde AUR-gebruikers. Als je je e-mailadres wél verbergt, dan is "
+"het alleen zichtbaar voor Arch Linux-medewerkers."
 
 #: template/account_edit_form.php
 msgid "Backup Email Address"
@@ -1364,20 +1463,26 @@ msgstr "Tweede e-mailadres"
 msgid ""
 "Optionally provide a secondary email address that can be used to restore "
 "your account in case you lose access to your primary email address."
-msgstr "U kunt desgewenst een tweede e-mailadres opgeven. Zo kunt u uw account herstellen als u geen toegang meer heeft tot uw primaire e-mailaccount."
+msgstr ""
+"U kunt desgewenst een tweede e-mailadres opgeven. Zo kunt u uw account "
+"herstellen als u geen toegang meer heeft tot uw primaire e-mailaccount."
 
 #: template/account_edit_form.php
 msgid ""
 "Password reset links are always sent to both your primary and your backup "
 "email address."
-msgstr "Er is een wachtwoordherstelsleutel verstuurd naar uw e-mailadres en uw tweede e-mailadres."
+msgstr ""
+"Er is een wachtwoordherstelsleutel verstuurd naar je primaire en tweede "
+"e-mailadres."
 
 #: template/account_edit_form.php
 #, php-format
 msgid ""
 "Your backup email address is always only visible to members of the Arch "
 "Linux staff, independent of the %s setting."
-msgstr "Uw tweede e-mailadres is alleen zichtbaar voor Arch Linux-medewerkers, ongeacht de instelling ‘%s’."
+msgstr ""
+"Je tweede e-mailadres is alleen zichtbaar voor Arch Linux-medewerkers, "
+"ongeacht de instelling ‘%s’."
 
 #: template/account_edit_form.php
 msgid "Language"
@@ -1391,7 +1496,9 @@ msgstr "Tijdzone"
 msgid ""
 "If you want to change the password, enter a new password and confirm the new"
 " password by entering it again."
-msgstr "Als u uw wachtwoord wilt wijzigen, voer dan een nieuw wachtwoord in en bevestig het door het nogmaals in te voeren."
+msgstr ""
+"Als je je wachtwoord wilt wijzigen, voer dan een nieuw wachtwoord in en "
+"bevestig het door het nogmaals in te voeren."
 
 #: template/account_edit_form.php
 msgid "Re-type password"
@@ -1401,7 +1508,9 @@ msgstr "Wachtwoord bevestigen"
 msgid ""
 "The following information is only required if you want to submit packages to"
 " the Arch User Repository."
-msgstr "De volgende informatie is alleen verplicht als u pakketten aan de Arch User Repository wilt toevoegen."
+msgstr ""
+"De volgende informatie is alleen verplicht als je pakketten aan de Arch User"
+" Repository wilt toevoegen."
 
 #: templates/partials/account_form.html
 msgid ""
@@ -1444,7 +1553,9 @@ msgstr "Huidig wachtwoord"
 msgid ""
 "To protect the AUR against automated account creation, we kindly ask you to "
 "provide the output of the following command:"
-msgstr "Geef de uitvoer van de volgende opdracht op om automatische accountaanmaak te voorkomen:"
+msgstr ""
+"Geef de uitvoer van de volgende opdracht op om automatische accountaanmaak "
+"te voorkomen:"
 
 #: template/account_edit_form.php
 msgid "Answer"
@@ -1495,7 +1606,9 @@ msgstr "Geen verdere resultaten gevonden."
 #, php-format
 msgid ""
 "Use this form to add co-maintainers for %s%s%s (one user name per line):"
-msgstr "Gebruik dit formulier om mede-onderhouders toe te voegen aan ‘%s%s%s’ (één gebruikersnaam per regel):"
+msgstr ""
+"Gebruik dit formulier om mede-onderhouders toe te voegen aan ‘%s%s%s’ (één "
+"gebruikersnaam per regel):"
 
 #: template/comaintainers_form.php
 msgid "Users"
@@ -1513,7 +1626,9 @@ msgstr "Gemarkeerde verouderde opmerking: %s"
 #: template/flag_comment.php
 #, php-format
 msgid "%s%s%s flagged %s%s%s out-of-date on %s%s%s for the following reason:"
-msgstr "%s%s%s heeft %s%s%s gemarkeerd als verouderd op %s%s%s omwille van de volgende reden:"
+msgstr ""
+"%s%s%s heeft %s%s%s gemarkeerd als verouderd op %s%s%s omwille van de "
+"volgende reden:"
 
 #: template/flag_comment.php
 #, php-format
@@ -1663,7 +1778,9 @@ msgstr "Opmerking toevoegen"
 msgid ""
 "Git commit identifiers referencing commits in the AUR package repository and"
 " URLs are converted to links automatically."
-msgstr "Git-commitidentificaties die verwijzen naar commits in de AUR-bron en url's, worden automatisch omgezet naar links."
+msgstr ""
+"Git-commitidentificaties die verwijzen naar commits in de AUR-bron en url's,"
+" worden automatisch omgezet naar links."
 
 #: template/pkg_comment_form.php
 #, php-format
@@ -1788,13 +1905,17 @@ msgstr "Bronnen"
 #: template/pkgreq_close_form.php
 #, php-format
 msgid "Use this form to close the request for package base %s%s%s."
-msgstr "Gebruik dit formulier om het verzoek aangaande het basispakket ‘%s%s%s’ te sluiten."
+msgstr ""
+"Gebruik dit formulier om het verzoek aangaande het basispakket ‘%s%s%s’ te "
+"sluiten."
 
 #: template/pkgreq_close_form.php
 msgid ""
 "The comments field can be left empty. However, it is highly recommended to "
 "add a comment when rejecting a request."
-msgstr "Het commentaarveld mag worden leeggelaten, maar het wordt sterk aanbevolen om een afwijzing van commentaar te voorzien."
+msgstr ""
+"Het commentaarveld mag worden leeggelaten, maar het wordt sterk aanbevolen "
+"om een afwijzing van commentaar te voorzien."
 
 #: template/pkgreq_close_form.php
 msgid "Reason"
@@ -1815,7 +1936,9 @@ msgstr "Afgewezen"
 msgid ""
 "Use this form to file a request against package base %s%s%s which includes "
 "the following packages:"
-msgstr "Gebruik dit formulier om een verzoek in te dienen voor het basispakket ‘%s%s%s’, wat de volgende pakketten bevat:"
+msgstr ""
+"Gebruik dit formulier om een verzoek in te dienen voor het basispakket "
+"‘%s%s%s’, wat de volgende pakketten bevat:"
 
 #: template/pkgreq_form.php
 msgid "Request type"
@@ -2035,7 +2158,9 @@ msgstr "Versie"
 msgid ""
 "Popularity is calculated as the sum of all votes with each vote being "
 "weighted with a factor of %.2f per day since its creation."
-msgstr "De populariteit wordt vastgesteld op basis van het totaal aantal stemmen plus een factor %.2f per dag sinds de aanmaak."
+msgstr ""
+"De populariteit wordt vastgesteld op basis van het totaal aantal stemmen "
+"plus een factor %.2f per dag sinds de aanmaak."
 
 #: template/pkg_search_results.php template/tu_details.php
 #: template/tu_list.php
@@ -2108,7 +2233,7 @@ msgstr "Geregistreerde gebruikers"
 
 #: template/stats/general_stats_table.php
 msgid "Package Maintainers"
-msgstr ""
+msgstr "Pakketonderhouders"
 
 #: template/stats/updates_table.php
 msgid "Recent Updates"
@@ -2189,7 +2314,11 @@ msgid ""
 "A password reset request was submitted for the account {user} associated "
 "with your email address. If you wish to reset your password follow the link "
 "[1] below, otherwise ignore this message and nothing will happen."
-msgstr "Er is een verzoek ingediend om het wachtwoord te herstellen van het account ‘{user}’, wat geregistreerd staat op uw e-mailadres. Als u uw wachtwoord wilt herstellen, volg dan onderstaande link ([1]). Als u dat niet wilt, kunt u deze e-mail beschouwen als niet-verzonden."
+msgstr ""
+"Er is een verzoek ingediend om het wachtwoord te herstellen van het account "
+"‘{user}’, wat geregistreerd staat op uw e-mailadres. Als u uw wachtwoord "
+"wilt herstellen, volg dan onderstaande link ([1]). Als u dat niet wilt, kunt"
+" u deze e-mail beschouwen als niet-verzonden."
 
 #: scripts/notify.py
 msgid "Welcome to the Arch User Repository"
@@ -2200,7 +2329,10 @@ msgid ""
 "Welcome to the Arch User Repository! In order to set an initial password for"
 " your new account, please click the link [1] below. If the link does not "
 "work, try copying and pasting it into your browser."
-msgstr "Welkom bij de Arch User Repository! Als u een nieuw wachtwoord voor uw account wilt instellen, klik dan op de link ([1]) hieronder. Als de link niet werkt, kopieer en plak deze dan in uw browser."
+msgstr ""
+"Welkom bij de Arch User Repository! Als u een nieuw wachtwoord voor uw "
+"account wilt instellen, klik dan op de link ([1]) hieronder. Als de link "
+"niet werkt, kopieer en plak deze dan in uw browser."
 
 #: scripts/notify.py
 #, python-brace-format
@@ -2217,7 +2349,9 @@ msgstr "{user} ([1]) heeft een opmerking geplaatst bij {pkgbase} ([2]): "
 msgid ""
 "If you no longer wish to receive notifications about this package, please go"
 " to the package page [2] and select \"{label}\"."
-msgstr "Als u geen meldingen aangaande dit pakket meer wilt ontvangen, ga dan naar de pakketpagina ([2]) en klik op ‘{label}’."
+msgstr ""
+"Als u geen meldingen aangaande dit pakket meer wilt ontvangen, ga dan naar "
+"de pakketpagina ([2]) en klik op ‘{label}’."
 
 #: scripts/notify.py
 #, python-brace-format
@@ -2237,7 +2371,9 @@ msgstr "AUR-verouderingsmelding van {pkgbase}"
 #: scripts/notify.py
 #, python-brace-format
 msgid "Your package {pkgbase} [1] has been flagged out-of-date by {user} [2]:"
-msgstr "Uw pakket genaamd ‘{pkgbase} ([1])’ is als verouderd gemarkeerd door {user} [2]:"
+msgstr ""
+"Uw pakket genaamd ‘{pkgbase} ([1])’ is als verouderd gemarkeerd door {user} "
+"[2]:"
 
 #: scripts/notify.py
 #, python-brace-format
@@ -2281,7 +2417,11 @@ msgid ""
 "\n"
 "-- \n"
 "If you no longer wish receive notifications about the new package, please go to [3] and click \"{label}\"."
-msgstr "{user} [1] heeft {old} [2] samengevoegd met {new} [3].\n\n--\nAls u geen meldingen aangaande dit pakket meer wilt ontvangen, ga dan naar de pakketpagina ([2]) en klik op ‘{label}’."
+msgstr ""
+"{user} [1] heeft {old} [2] samengevoegd met {new} [3].\n"
+"\n"
+"--\n"
+"Als u geen meldingen aangaande dit pakket meer wilt ontvangen, ga dan naar de pakketpagina ([2]) en klik op ‘{label}’."
 
 #: scripts/notify.py
 #, python-brace-format
@@ -2289,19 +2429,25 @@ msgid ""
 "{user} [1] deleted {pkgbase} [2].\n"
 "\n"
 "You will no longer receive notifications about this package."
-msgstr "{user} [1] heeft {pkgbase} [2] verwijderd.\n\n\nU ontvangt geen meldingen meer aangaande dit pakket."
+msgstr ""
+"{user} [1] heeft {pkgbase} [2] verwijderd.\n"
+"\n"
+"\n"
+"U ontvangt geen meldingen meer aangaande dit pakket."
 
 #: scripts/notify.py
 #, python-brace-format
 msgid "Package Maintainer Vote Reminder: Proposal {id}"
-msgstr ""
+msgstr "Herinnering om te stemmen Pakketonderhouder: Voorstel {id}"
 
 #: scripts/notify.py
 #, python-brace-format
 msgid ""
 "Please remember to cast your vote on proposal {id} [1]. The voting period "
 "ends in less than 48 hours."
-msgstr "Vergeet niet uw stem uit te brengen op het voorstel ‘{id}’ [1]. De stemming sluit over minder dan 48 uur."
+msgstr ""
+"Vergeet niet uw stem uit te brengen op het voorstel ‘{id}’ [1]. De stemming "
+"sluit over minder dan 48 uur."
 
 #: aurweb/routers/accounts.py
 msgid "Invalid account type provided."
@@ -2311,11 +2457,15 @@ msgstr "Ongeldig accounttype."
 msgid "You do not have permission to change account types."
 msgstr "U bent niet bevoegd om accounttypes te wijzigen."
 
-#: aurweb/routers/accounts.py
+#: aurweb/routers/accounts.py users/validate.py
+#, python-format
 msgid "You do not have permission to change this user's account type to %s."
-msgstr "U bent niet bevoegd om het accounttype van deze gebruiker te wijzigen in ‘%s’."
+msgstr ""
+"U bent niet bevoegd om het accounttype van deze gebruiker te wijzigen in "
+"‘%s’."
 
-#: aurweb/packages/requests.py
+#: aurweb/packages/requests.py packages/requests.py
+#, python-format
 msgid "No due existing orphan requests to accept for %s."
 msgstr "Er zijn geen goed te keuren onteigeningsverzoeken omtrent %s."
 
@@ -2331,7 +2481,9 @@ msgstr "Er is een kritieke fout opgetreden."
 msgid ""
 "Details have been logged and will be reviewed by the postmaster posthaste. "
 "We apologize for any inconvenience this may have caused."
-msgstr "De details zijn vastgelegd en worden nagekeken door de beheerder. Onze excuses voor het eventuele ontstane ongemak."
+msgstr ""
+"De details zijn vastgelegd en worden nagekeken door de beheerder. Onze "
+"excuses voor het eventuele ontstane ongemak."
 
 #: aurweb/scripts/notify.py
 msgid "AUR Server Error"
@@ -2346,7 +2498,9 @@ msgstr "Gerelateerde pakketverzoekreacties…"
 msgid ""
 "This action will close any pending package requests related to it. If "
 "%sComments%s are omitted, a closure comment will be autogenerated."
-msgstr "Met deze actie sluit u elk gerelateerd openstaand verzoek. Als %s reacties%s genegeerd worden, dan wordt er een automatische afsluitreactie geplaatst."
+msgstr ""
+"Met deze actie sluit u elk gerelateerd openstaand verzoek. Als %s reacties%s"
+" genegeerd worden, dan wordt er een automatische afsluitreactie geplaatst."
 
 #: templates/partials/tu/proposal/details.html
 msgid "assigned"
@@ -2378,4 +2532,25 @@ msgid ""
 "any request notifications. In case someone replies to these notifications, "
 "you won't receive an email. However, replies are typically sent to the "
 "mailing-list and would then be visible in the archive."
+msgstr ""
+
+#: templates/partials/packages/comment_form.html
+msgid "Maximum number of characters"
+msgstr ""
+
+#: routers/sso.py
+msgid "Bad OAuth token. Please retry logging in from the start."
+msgstr ""
+
+#: routers/sso.py
+msgid "JWT is missing its `sub` field."
+msgstr ""
+
+#: scripts/notify.py
+#, python-brace-format
+msgid ""
+"{user} [1] merged {old} [2] into {new} [3].\n"
+"\n"
+"--\n"
+"If you no longer wish receive notifications about the new package, please go to [3] and click \"{label}\"."
 msgstr ""
