@@ -60,7 +60,6 @@ class Notification:
         return body.rstrip()
 
     def _send(self) -> None:
-        sendmail = aurweb.config.get("notifications", "sendmail")
         sender = aurweb.config.get("notifications", "sender")
         reply_to = aurweb.config.get("notifications", "reply-to")
         reason = self.__class__.__name__
@@ -75,7 +74,7 @@ class Notification:
             msg["Reply-to"] = reply_to
             msg["To"] = to
             if self.get_cc():
-                msg["Cc"] = str.join(", ", self.get_cc())
+                msg["Cc"] = ", ".join(self.get_cc())
             msg["X-AUR-Reason"] = reason
             msg["Date"] = email.utils.formatdate(localtime=True)
 
@@ -86,8 +85,7 @@ class Notification:
             if sendmail:
                 # send email using the sendmail binary specified in the
                 # configuration file
-                p = subprocess.Popen([sendmail, "-t", "-oi"], stdin=subprocess.PIPE)
-                p.communicate(msg.as_bytes())
+                subprocess.run([sendmail, "-t", "-oi"], input=msg.as_bytes())
             else:
                 # send email using smtplib; no local MTA required
                 server_addr = aurweb.config.get("notifications", "smtp-server")
