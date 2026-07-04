@@ -143,7 +143,7 @@ echo "INSERT INTO PackageBlacklist (Name) VALUES ('forbidden');" | sqlite3 aur.d
 echo "INSERT INTO OfficialProviders (Name, Repo, Provides) VALUES ('official', 'core', 'official');" | sqlite3 aur.db
 
 # Initialize a Git repository and test packages.
-GIT_AUTHOR_EMAIL=author@example.com
+GIT_AUTHOR_EMAIL=user@localhost
 GIT_AUTHOR_NAME='A U Thor'
 GIT_COMMITTER_EMAIL=committer@example.com
 GIT_COMMITTER_NAME='C O Mitter'

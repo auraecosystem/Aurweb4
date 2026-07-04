@@ -328,6 +328,10 @@ def main() -> None:  # noqa: C901
         acceptable_basenames = spdx_identifiers_io.read().splitlines()
         acceptable_basenames += spdx_exceptions_io.read().splitlines()
 
+    # Get the user email of the maintainer.
+    cur = conn.execute("SELECT Email FROM Users WHERE Username = ?", [user])
+    user_email = cur.fetchone()[0].casefold()
+
     # Validate all new commits.
     for commit in walker:
         if "PKGBUILD" not in commit.tree:
@@ -399,6 +403,15 @@ def main() -> None:  # noqa: C901
                         "acceptable SPDX license or start with `LicenseRef-`",
                         str(commit.id),
                     )
+
+        # Check if the author email matches the user email
+        if commit.author.email.casefold() != user_email:
+            # Allow if the user is privileged with AUR_PRIVILEGED
+            if not privileged:
+                die_commit(
+                    "The author email address is invalid",
+                    str(commit.id),
+                )
 
     # Display a warning if .SRCINFO is unchanged.
     if sha1_old not in ("0000000000000000000000000000000000000000", sha1_new):
