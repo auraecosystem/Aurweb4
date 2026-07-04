@@ -301,10 +301,16 @@ def test_pkgbase_maintainer(
 
     root = parse_root(resp.text)
 
-    maint = root.xpath('//table[@id="pkginfo"]/tr[@class="pkgmaint"]/td')[0]
-    maint, comaint = maint.text.strip().split()
-    assert maint == maintainer.Username
-    assert comaint == f"({user.Username})"
+    spans = root.xpath('//table[@id="pkginfo"]/tr[@class="pkgmaint"]/td')[0].findall(
+        "span"
+    )
+    maint = [elem for elem in spans if elem.text.strip() == maintainer.Username]
+    comaint = [elem for elem in spans if elem.text.strip() == user.Username]
+    assert len(maint) == len(comaint) == 1
+
+    # Usernames on Package Details pages can have an extra span next to the
+    # username link/span in some cases. Just check if these are in the right order:
+    assert spans.index(maint[0]) < spans.index(comaint[0])
 
 
 def test_pkgbase_voters(client: TestClient, pm_user: User, package: Package):
