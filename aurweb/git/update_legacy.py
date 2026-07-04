@@ -284,6 +284,17 @@ def main() -> None:  # noqa: C901
 
     conn = aurweb.db.Connection()
 
+    # Defense-in-depth write-access check (covers both SSH and HTTP paths).
+    if not privileged:
+        cur = conn.execute(
+            "SELECT COUNT(*) FROM PackageBases WHERE Name = ?", [pkgbase]
+        )
+        if cur.fetchone()[0] > 0:
+            from aurweb.git.serve import pkgbase_has_write_access
+
+            if not pkgbase_has_write_access(pkgbase, user):
+                die(f"permission denied: {user}")
+
     # Detect and deny non-fast-forwards.
     if sha1_old != "0" * 40 and not allow_overwrite:
         walker = repo.walk(sha1_old, pygit2.GIT_SORT_TOPOLOGICAL)

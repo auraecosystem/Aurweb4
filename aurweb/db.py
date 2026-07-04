@@ -201,6 +201,31 @@ def async_retry_deadlock(func):
     return wrapper
 
 
+_STALE_CONNECTION_ERRORS = ("Server has gone away", "Lost connection")
+
+
+def async_retry_stale_connection(func):
+    """Retry an async function once if the DB connection has gone stale.
+
+    Closes the SQLAlchemy session to force a fresh connection on retry.
+    """
+    import functools
+
+    from sqlalchemy.exc import OperationalError
+
+    @functools.wraps(func)
+    async def wrapper(*args, **kwargs):
+        try:
+            return await func(*args, **kwargs)
+        except OperationalError as exc:
+            if any(e in str(exc) for e in _STALE_CONNECTION_ERRORS):
+                get_session().close()
+                return await func(*args, **kwargs)
+            raise exc
+
+    return wrapper
+
+
 def get_sqlalchemy_url():
     """
     Build an SQLAlchemy URL for use with create_engine.

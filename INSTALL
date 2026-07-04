@@ -30,8 +30,65 @@ read the instructions below.
         ssl_certificate /etc/ssl/certs/aur.cert.pem;
         ssl_certificate_key /etc/ssl/private/aur.key.pem;
 
-        # smartgit location.
-        location ~ "^/([a-z0-9][a-z0-9.+_-]*?)(\.git)?/(git-(receive|upload)-pack|HEAD|info/refs|objects/(info/(http-)?alternates|packs)|[0-9a-f]{2}/[0-9a-f]{38}|pack/pack-[0-9a-f]{40}\.(pack|idx))$" {
+        # API key auth subrequest endpoint for HTTPS git push.
+        location = /_git_auth {
+            internal;
+            proxy_pass http://127.0.0.1:8000/_git_auth_check;
+            proxy_pass_request_body off;
+            proxy_set_header Content-Length "";
+            proxy_set_header X-Original-URI $request_uri;
+            proxy_set_header Authorization $http_authorization;
+        }
+
+        location @git_auth_required {
+            add_header WWW-Authenticate 'Basic realm="AUR"' always;
+            return 401;
+        }
+
+        # Write operations (push) — requires API key auth.
+        location ~ "^/([a-z0-9][a-z0-9.+_-]*?)(\.git)?/(git-receive-pack)$" {
+            auth_request /_git_auth;
+            auth_request_set $aur_user $upstream_http_x_aur_user;
+            auth_request_set $aur_privileged $upstream_http_x_aur_privileged;
+            error_page 401 = @git_auth_required;
+
+            include      uwsgi_params;
+            uwsgi_pass   smartgit;
+            uwsgi_modifier1 9;
+            uwsgi_param  SCRIPT_FILENAME /usr/lib/git-core/git-http-backend;
+            uwsgi_param  PATH_INFO /aur.git/$3;
+            uwsgi_param  GIT_HTTP_EXPORT_ALL "";
+            uwsgi_param  GIT_NAMESPACE $1;
+            uwsgi_param  GIT_PROJECT_ROOT /srv/http/aurweb;
+            uwsgi_param  REMOTE_USER $aur_user if_not_empty;
+            uwsgi_param  AUR_USER $aur_user if_not_empty;
+            uwsgi_param  AUR_PKGBASE $1;
+            uwsgi_param  AUR_PRIVILEGED $aur_privileged if_not_empty;
+        }
+
+        # info/refs serves both read and write discovery.
+        location ~ "^/([a-z0-9][a-z0-9.+_-]*?)(\.git)?/(info/refs)$" {
+            auth_request /_git_auth;
+            auth_request_set $aur_user $upstream_http_x_aur_user;
+            auth_request_set $aur_privileged $upstream_http_x_aur_privileged;
+            error_page 401 = @git_auth_required;
+
+            include      uwsgi_params;
+            uwsgi_pass   smartgit;
+            uwsgi_modifier1 9;
+            uwsgi_param  SCRIPT_FILENAME /usr/lib/git-core/git-http-backend;
+            uwsgi_param  PATH_INFO /aur.git/$3;
+            uwsgi_param  GIT_HTTP_EXPORT_ALL "";
+            uwsgi_param  GIT_NAMESPACE $1;
+            uwsgi_param  GIT_PROJECT_ROOT /srv/http/aurweb;
+            uwsgi_param  REMOTE_USER $aur_user if_not_empty;
+            uwsgi_param  AUR_USER $aur_user if_not_empty;
+            uwsgi_param  AUR_PKGBASE $1;
+            uwsgi_param  AUR_PRIVILEGED $aur_privileged if_not_empty;
+        }
+
+        # Read-only git operations (clone/fetch) — no auth needed.
+        location ~ "^/([a-z0-9][a-z0-9.+_-]*?)(\.git)?/(git-upload-pack|HEAD|objects/(info/(http-)?alternates|packs)|[0-9a-f]{2}/[0-9a-f]{38}|pack/pack-[0-9a-f]{40}\.(pack|idx))$" {
             include      uwsgi_params;
             uwsgi_pass   smartgit;
             uwsgi_modifier1 9;

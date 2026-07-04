@@ -6,7 +6,9 @@ See https://fastapi.tiangolo.com/tutorial/bigger-applications/
 
 from . import (
     accounts,
+    api_keys,
     auth,
+    git_auth,
     html,
     package_maintainer,
     packages,
@@ -24,7 +26,9 @@ to a fastapi.APIRouter.
 """
 APP_ROUTES = [
     accounts,
+    api_keys,
     auth,
+    git_auth,
     html,
     packages,
     pkgbase,

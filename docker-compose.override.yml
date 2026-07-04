@@ -15,6 +15,7 @@ services:
       - git_data:/aurweb/aur.git
       - ./data:/data
       - smartgit_run:/var/run/smartgit
+      - mariadb_run:/var/run/mysqld
 
   fastapi:
     volumes:

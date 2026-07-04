@@ -289,6 +289,16 @@
                 }}
             </em>
         </p>
+
+        {% if form_type == "UpdateAccount" %}
+            <p>
+                {{ "You can also authenticate git push over HTTPS using %sAPI Keys%s."
+                | tr
+                | format('<a href="/account/%s/api-keys">' | format(username), '</a>')
+                | safe
+                }}
+            </p>
+        {% endif %}
     </fieldset>
 
     <fieldset>

@@ -67,6 +67,7 @@ if [ ! -f $GIT_REPO/config ]; then
     git config --local transfer.hideRefs '^refs/'
     git config --local --add transfer.hideRefs '!refs/'
     git config --local --add transfer.hideRefs '!HEAD'
+    git config --local http.receivepack true
     ln -sf /usr/bin/aurweb-git-update hooks/update
     cd $curdir
     chown -R aur:aur $GIT_REPO

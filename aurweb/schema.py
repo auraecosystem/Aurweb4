@@ -132,6 +132,29 @@ SSHPubKeys = Table(
 )
 
 
+# API keys used for HTTPS Git authentication.
+ApiKeys = Table(
+    "ApiKeys",
+    metadata,
+    Column("ID", INTEGER(unsigned=True), primary_key=True),
+    Column("UserID", ForeignKey("Users.ID", ondelete="CASCADE"), nullable=False),
+    Column("KeyHash", String(64), nullable=False, unique=True),
+    Column("Name", String(128), nullable=False, server_default=text("''")),
+    Column(
+        "CreatedTS",
+        TIMESTAMP,
+        nullable=False,
+        server_default=text("CURRENT_TIMESTAMP"),
+    ),
+    Column("LastUsedTS", BIGINT(unsigned=True)),
+    Column("LastUsedIPAddress", String(45)),
+    Index("ApiKeysUserID", "UserID"),
+    mysql_engine="InnoDB",
+    mysql_charset="utf8mb4",
+    mysql_collate="utf8mb4_bin",
+)
+
+
 # Track Users logging in/out of AUR web site.
 Sessions = Table(
     "Sessions",

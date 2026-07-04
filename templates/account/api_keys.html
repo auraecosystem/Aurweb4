@@ -1,0 +1,86 @@
+{% extends "partials/layout.html" %}
+
+{% block pageContent %}
+    <div class="box">
+        <h2>{{ "Accounts" | tr }}</h2>
+
+        {% include "partials/error.html" %}
+
+        {% if new_key %}
+            <div class="important">
+                <p>
+                    <strong>{{ "Your new API key has been created." | tr }}</strong>
+                    {{ "Copy it now — it will not be shown again." | tr }}
+                </p>
+                <p>
+                    <code id="api-key-value">{{ new_key }}</code>
+                </p>
+            </div>
+        {% endif %}
+
+        <h3>{{ "API Keys" | tr }}</h3>
+
+        <p>
+            <em>
+                {{ "API keys can be used to authenticate git push operations over HTTPS, as an alternative to SSH keys." | tr }}
+                {{ "Use your username and API key as the password when prompted by git." | tr }}
+            </em>
+        </p>
+
+        {% if api_keys %}
+            <table class="results">
+                <thead>
+                    <tr>
+                        <th>{{ "Name" | tr }}</th>
+                        <th>{{ "Created" | tr }}</th>
+                        <th>{{ "Last Used" | tr }}</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for key in api_keys %}
+                        <tr>
+                            <td>{{ key.Name or "—" }}</td>
+                            <td>{{ key.CreatedTS | as_timezone(timezone) }}</td>
+                            <td>
+                                {% if key.LastUsedTS %}
+                                    {{ key.LastUsedTS | dt | as_timezone(timezone) }}
+                                    {% if key.LastUsedIPAddress %}
+                                        ({{ key.LastUsedIPAddress }})
+                                    {% endif %}
+                                {% else %}
+                                    {{ "Never" | tr }}
+                                {% endif %}
+                            </td>
+                            <td>
+                                <form method="post"
+                                      action="/account/{{ user.Username }}/api-keys/{{ key.ID }}/delete">
+                                    <button class="button" type="submit">{{ "Delete" | tr }}</button>
+                                </form>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        {% else %}
+            <p>{{ "No API keys have been created." | tr }}</p>
+        {% endif %}
+
+        <h3>{{ "Create API Key" | tr }}</h3>
+
+        <form method="post"
+              action="/account/{{ user.Username }}/api-keys/create">
+            <fieldset>
+                <p>
+                    <label for="id_name">{{ "Label" | tr }}:</label>
+                    <input id="id_name" type="text" size="30"
+                           maxlength="128" name="name"
+                           placeholder="{{ 'e.g. CI pipeline' | tr }}">
+                </p>
+                <p>
+                    <button class="button" type="submit">{{ "Create" | tr }}</button>
+                </p>
+            </fieldset>
+        </form>
+    </div>
+{% endblock %}

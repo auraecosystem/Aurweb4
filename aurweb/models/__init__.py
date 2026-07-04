@@ -2,6 +2,7 @@
 
 from .accepted_term import AcceptedTerm  # noqa: F401
 from .account_type import AccountType  # noqa: F401
+from .api_key import ApiKey  # noqa: F401
 from .api_rate_limit import ApiRateLimit  # noqa: F401
 from .ban import Ban  # noqa: F401
 from .dependency_type import DependencyType  # noqa: F401

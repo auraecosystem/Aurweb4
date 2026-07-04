@@ -36,6 +36,12 @@
                          "</a>")
                 | safe
                 }}
+                {{ "Click %shere%s to manage API keys."
+                | tr
+                | format('<a href="%s/api-keys">' | format(user | account_url),
+                         "</a>")
+                | safe
+                }}
                 </p>
             {% endif %}
 
