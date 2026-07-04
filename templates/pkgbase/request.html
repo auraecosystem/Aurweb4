@@ -47,6 +47,16 @@
                                 selected
                             {% endif %}
                         >{{ "Orphan" | tr }}</option>
+                        <option value="report"
+                            {% if type == "report" %}
+                                selected
+                            {% endif %}
+                        >{{ "Report" | tr }}</option>
+                        <option value="rename"
+                            {% if type == "rename" %}
+                                selected
+                            {% endif %}
+                        >{{ "Rename" | tr }}</option>
                     </select>
                 </p>
 
@@ -99,6 +109,19 @@
                     }}
                 </p>
 
+                <p id="report_hint" style="display: none">
+                    {{
+                        "By submitting a report request, you report a suspicious package. "
+                        "Any useful information will be appreciated." | tr
+                    }}
+                </p>
+
+                <p id="rename_hint" style="display: none">
+                    {{
+                        "By submitting a rename request, you ask for the package to be renamed. "
+                        "New name must be written in the 'comments' field." | tr
+                    }}
+                </p>
                 <p>
                     <button class="button" type="submit">
                         {{ "Submit Request" | tr }}

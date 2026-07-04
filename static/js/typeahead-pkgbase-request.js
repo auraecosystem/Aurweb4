@@ -12,7 +12,8 @@ function showHideRequestHints() {
     document.getElementById('deletion_hint').style.display = 'none';
     document.getElementById('merge_hint').style.display = 'none';
     document.getElementById('orphan_hint').style.display = 'none';
-
+    document.getElementById('report_hint').style.display = 'none';
+    document.getElementById('rename_hint').style.display = 'none';
     const elem = document.getElementById('id_type');
     document.getElementById(elem.value + '_hint').style.display = '';
 }
