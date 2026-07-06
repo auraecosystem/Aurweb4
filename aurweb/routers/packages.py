@@ -176,7 +176,7 @@ async def package(
             replaces.append(relation)
 
     # Add our base information.
-    context = pkgbaseutil.make_context(request, pkgbase)
+    context = pkgbaseutil.make_context(request, pkgbase, None, pkg.Name)
     context["q"] = dict(request.query_params)
 
     context.update({"all_deps": all_deps, "all_reqs": all_reqs})
